@@ -29,6 +29,9 @@ const coachSchema = mongoose.Schema({
     },
     tokenExp: {
         type: Number
+    },
+    accountRole: {
+        type: String
     }
 })
 
