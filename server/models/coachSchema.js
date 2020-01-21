@@ -4,6 +4,9 @@ const saltRounds = 10;
 const jwt = require('jsonwebtoken');
 
 const coachSchema = mongoose.Schema({
+    profile_pic: {
+        type: String
+    },
     email: {
         type: String,
         trim: true,
