@@ -17,14 +17,15 @@ app.use(cors());
 mongoose.connect(`${process.env.MONGODB_URI}`, {
     useNewUrlParser: true,
     useCreateIndex: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useFindAndModify: false
 })
 .then(() => console.log('MongooDB connected'))
 .catch(err => console.log('there was an error', err))
 
 
 // Coach User endpoints
-app.use('/api/users', require('./apiRoutes/coach_user_route'));
+app.use('/api/coach-users', require('./apiRoutes/coach_user_route'));
 
 const port = process.env.PORT || 4000
 
