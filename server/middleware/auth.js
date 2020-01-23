@@ -7,14 +7,12 @@ let auth = (req, res, next) => {
         if(err){
             return res.json({error: err})
         }
-
         if(!user){
             return res.json({
                 isAuth: false,
                 error: true
             })
         }
-
         req.token = token;
         req.user = user;
         next()
