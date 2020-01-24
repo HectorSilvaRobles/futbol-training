@@ -49,9 +49,9 @@ function RegisterPage(props){
                 firstname: Yup.string().required('First name is required'),
                 lastname: Yup.string().required('Last name is required'),
                 password: Yup.string().min(6, 'Password must be atleast 6 characters').required('Password is required'),
-                confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match').required('Please confirm password')
+                confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match').required('Please confirm password'),
                 // profile_pic: Yup.string().required('Profile is required'),
-                // accountRole: Yup.string().required('Account role is required')
+                accountRole: Yup.string().required('Account role is required')
             })}
 
             
@@ -159,6 +159,25 @@ function RegisterPage(props){
                             />
                             {touched.confirmPassword && errors.confirmPassword && (
                                 <div className='input-error-feedback'>{errors.confirmPassword}</div>
+                            )}
+                        </div>
+
+                        <div className="form-group">
+                            <label htmlFor="confirm">Account Role</label>
+                            <Field 
+                                id="accountRole" 
+                                component="select"
+                                className="select-option"
+                                value={values.accountRole}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                            >
+                                <option value="">Select</option>
+                                <option value='Admin'>Admin</option>
+                                <option value="Regular">Regular</option>
+                            </Field>
+                            {touched.accountRole && errors.accountRole && (
+                                    <div className='input-error-feedback'>{errors.accountRole}</div>
                             )}
                         </div>
 
