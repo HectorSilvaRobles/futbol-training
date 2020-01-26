@@ -3,9 +3,21 @@ import {Formik, Form, Field} from 'formik';
 import * as Yup from 'yup';
 import {registerUser} from '../../Redux/actions/coach_user_actions';
 import {useDispatch} from 'react-redux';
+import axios from 'axios'
 
 function RegisterPage(props){
     const dispatch = useDispatch();
+
+    const fileSelectedHandler = event => {
+        const profile_pic = event.target.files[0]
+        const fd = new FormData()
+        fd.append('image', profile_pic, profile_pic.name)
+        axios.post('https://us-central1-futbol-training.cloudfunctions.net/uploadFile', fd)
+        .then(res => {
+            console.log(res)
+        })
+        
+    }
 
     return (
         <Formik
@@ -20,7 +32,6 @@ function RegisterPage(props){
             }}
 
             onSubmit={(values, {setSubmitting}) => {
-                
                 setTimeout(() => {
                     let dataToSubmit = {
                         email: values.email,
@@ -65,9 +76,10 @@ function RegisterPage(props){
                 handleChange,
                 handleBlur,
                 handleSubmit,
-                handleReset
+                handleReset,
+                setFieldValue
             } = props;
-            
+
             return (
                 <div className='register-page'>
                     <h2>Sign Up</h2>
@@ -179,6 +191,10 @@ function RegisterPage(props){
                             {touched.accountRole && errors.accountRole && (
                                     <div className='input-error-feedback'>{errors.accountRole}</div>
                             )}
+                        </div>
+
+                        <div className='form-group'>
+                                <input id='profile_pic' name='profile_pic' type='file' onChange={fileSelectedHandler} />
                         </div>
 
                         <div className='form-submit-button'>
