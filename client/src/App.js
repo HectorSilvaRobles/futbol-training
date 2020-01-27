@@ -1,15 +1,19 @@
 import React from 'react';
 import './App.css';
+import {Route, Switch} from 'react-router-dom'
 
 import HomePage from './Components/Homepage/HomePage'
 import RegisterPage from './Components/RegisterPage/RegisterPage'
-import Upload from './Components/uploader'
+
 
 function App() {
   return (
     <div className="App">
-      {/* <RegisterPage /> */}
-      <Upload />
+      <div>
+        <Route exact path='/' component={HomePage} />
+        <Route exact path='/register' component={RegisterPage} />
+
+      </div>
     </div>
   );
 }

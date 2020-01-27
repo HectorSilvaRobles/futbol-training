@@ -1,23 +1,71 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Formik, Form, Field} from 'formik';
 import * as Yup from 'yup';
 import {registerUser} from '../../Redux/actions/coach_user_actions';
 import {useDispatch} from 'react-redux';
-import axios from 'axios'
+import {storage} from '../../firebaseConfig'
 
 function RegisterPage(props){
     const dispatch = useDispatch();
 
-    const fileSelectedHandler = event => {
-        const profile_pic = event.target.files[0]
-        const fd = new FormData()
-        fd.append('image', profile_pic, profile_pic.name)
-        axios.post('https://us-central1-futbol-training.cloudfunctions.net/uploadFile', fd)
-        .then(res => {
-            console.log(res)
-        })
-        
-    }
+     // Uploading a profile pic to firebase and getting back the URL to image
+     const [image, setImg] = useState(null);
+     const [url, setUrl] = useState(null);
+     const [progress, setProgress] = useState(0);
+     const [error, setError] = useState('');
+ 
+     const handleFileUpload = (event) => {
+         const file = event.target.files[0];
+ 
+         if(file){
+             const fileType = file['type'];
+             const validImageTypes = ["image/jpeg", "image/png"]
+ 
+             if(validImageTypes.includes(fileType)){
+                 console.log(file)
+                 setError('')
+                 setImg(file)
+                 console.log(image)
+             } else {
+                 setError('Please select an Image to upload, 1')
+             }
+         }
+         
+     }
+ 
+     const handleUpdate = () => {
+        console.log(image)
+         if(image){
+             const uploadTask = storage.ref(`profile_pic/${image.name}`).put(image);
+     
+             uploadTask.on(
+                 'state_changed',
+     
+                 snapshot => {
+                     const progress = Math.round(snapshot.bytes / snapshot.totalBytes) * 100
+                     setProgress(progress)
+                 },
+     
+                 error => {
+                     setError(error)
+                 },
+     
+                 // Getting the url of the image
+                 () => {
+                     storage.ref('profile_pic').child(image.name).getDownloadURL()
+                     .then(url => {
+                         console.log(url)
+                         setUrl(url)
+                         setProgress(0);
+                     })
+                 }
+             )
+         } else {
+             console.log(image)
+             setError('Error please choose an image to upload')
+         }
+     }
+
 
     return (
         <Formik
@@ -32,24 +80,28 @@ function RegisterPage(props){
             }}
 
             onSubmit={(values, {setSubmitting}) => {
+
                 setTimeout(() => {
                     let dataToSubmit = {
                         email: values.email,
                         firstname: values.firstname,
                         lastname: values.lastname,
                         password: values.password,
-                        profile_pic: values.profile_pic,
+                        profile_pic: url ? url : '',
                         accountRole: values.accountRole
                     };
 
                     console.log(dataToSubmit)
-                    // dispatch(registerUser(dataToSubmit)).then(res => {
-                    //     if(res.payload.success){
-                    //         props.history.push('/')
-                    //     } else {
-                    //         alert(res.payload.err.errmsg)
-                    //     }
-                    // });
+                    dispatch(registerUser(dataToSubmit)).then(res => {
+                        if(res.payload.success){
+                            props.history.push('/')
+                        } else if (res.payload.response.data.error.errmsg){
+                            alert('Email has already been registered, Login or choose a different email')
+                        }
+                         else {
+                            alert('Something went wrong...')
+                        }
+                    });
 
                     setSubmitting(false);
                 }, 500)
@@ -61,12 +113,10 @@ function RegisterPage(props){
                 lastname: Yup.string().required('Last name is required'),
                 password: Yup.string().min(6, 'Password must be atleast 6 characters').required('Password is required'),
                 confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match').required('Please confirm password'),
-                // profile_pic: Yup.string().required('Profile is required'),
                 accountRole: Yup.string().required('Account role is required')
             })}
-
-            
         >
+        
         {props => {
             const {
                 values,
@@ -77,13 +127,15 @@ function RegisterPage(props){
                 handleBlur,
                 handleSubmit,
                 handleReset,
-                setFieldValue
             } = props;
 
             return (
                 <div className='register-page'>
                     <h2>Sign Up</h2>
                     <Form onSubmit={handleSubmit}>
+                        <div className='profile-picture'>
+                            <img src={url ? url : null} />
+                        </div>
                         <div className="form-group">
                             <label htmlFor="firstname">First Name</label>
                             <Field 
@@ -194,7 +246,13 @@ function RegisterPage(props){
                         </div>
 
                         <div className='form-group'>
-                                <input id='profile_pic' name='profile_pic' type='file' onChange={fileSelectedHandler} />
+                                <div className='upload-profile-pic'>
+                                    <input type='file' onChange={handleFileUpload} id='profile_pic' name='profile_pic' />
+                                    <button onClick={handleUpdate} type='button'>Upload Image</button>
+                                </div>
+                                <div style={{height: '100px'}}>
+                                    <p style={{color: 'red'}}>{error}</p>
+                                </div>
                         </div>
 
                         <div className='form-submit-button'>

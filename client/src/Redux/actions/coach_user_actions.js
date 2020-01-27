@@ -3,8 +3,11 @@ import {LOGIN_USER, REGISTER_USER, LOGOUT_USER, AUTH_USER} from './types'
 
 
 export function registerUser(dataToSubmit){
-    const request = axios.post('/api/coach-user/register', dataToSubmit)
+    const request = axios.post('/api/coach-users/register', dataToSubmit)
     .then(res => res.data)
+    .catch(err => err)
+
+    console.log(request)
 
     return {
         type: REGISTER_USER,
@@ -13,7 +16,7 @@ export function registerUser(dataToSubmit){
 }
 
 export function loginUser(dataToSubmit){
-    const request = axios.post('/api/coach-user/login', dataToSubmit)
+    const request = axios.post('/api/coach-users/login', dataToSubmit)
     .then(res => res.data)
 
     return {
@@ -23,7 +26,7 @@ export function loginUser(dataToSubmit){
 }
 
 export function auth(){
-    const request = axios.get('/api/coach-user/auth',)
+    const request = axios.get('/api/coach-users/auth',)
     .then(res => res.data)
     return {
         type: AUTH_USER,
@@ -32,7 +35,7 @@ export function auth(){
 }
 
 export function logoutUser(){
-    const request = axios.get('/api/coach-user/logout',)
+    const request = axios.get('/api/coach-users/logout',)
     .then(res => res.data)
 
     return {
