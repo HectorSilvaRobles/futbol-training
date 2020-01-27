@@ -25,7 +25,10 @@ router.post('/register', (req, res) => {
 
     coach_user.save((err, doc) => {
         if(err){
-            return res.send('there was an error with creating new user', err)
+            return res.status(404).json({
+                message: 'there was an error with creating new user', 
+                error: err
+            })
         }
         return res.status(200).json({
             success: true,
