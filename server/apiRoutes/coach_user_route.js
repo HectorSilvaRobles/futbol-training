@@ -44,7 +44,7 @@ router.post('/login', (req, res) => {
     // find the coach user's email
     coachUser.findOne({email: req.body.email}, (err, user)=> {
         if(!user){
-            return res.json({
+            return res.status(404).json({
                 loginSuccess: false,
                 message: "login failed, email not found"
             })
@@ -53,7 +53,7 @@ router.post('/login', (req, res) => {
         // compare password
         user.comparePassword(req.body.password, (err, isMatch) => {
             if(!isMatch){
-                return res.json({
+                return res.status(404).json({
                     loginSuccess: false,
                     message: "Login failed, wrong password entered"
                 })
@@ -79,7 +79,7 @@ router.post('/login', (req, res) => {
 router.get('/logout', auth, (req, res) => {
     coachUser.findOneAndUpdate({_id: req.user._id}, {token: "", tokenExp: ""}, (err, doc) => {
                 if(err){
-                    return res.json({
+                    return res.status(404).json({
                         success: false,
                         error: err
                     })
