@@ -1,26 +1,18 @@
 import React, {useState} from 'react'
 import {withRouter} from 'react-router-dom';
 import {loginUser} from '../../Redux/actions/coach_user_actions'
-import {Formik} from 'formik';
+import {Formik, Form, Field} from 'formik';
 import * as Yup from 'yup';
 import {useDispatch} from 'react-redux';
 
 function LoginPage(props) {
     const dispatch = useDispatch()
 
-    const remeberMeChecked = localStorage.getItem('rememberMe') ? true : false;
-
     const [formErrorMessage, setFormErrorMessage ] = useState('')
-    const [rememberMe, setRememberMe] = useState(remeberMeChecked);
-
-    const handleRemeberMe = () => {
-        setRememberMe(!rememberMe)
-    }
 
     const initialEmail = localStorage.getItem('rememberMe') ? localStorage.getItem('rememberMe') : ''
 
     return (
-        <div>
             <Formik
                 // initializing values for login form
                 initialValues={{
@@ -42,7 +34,22 @@ function LoginPage(props) {
                         };
 
                         // sending user input data to loginUser in redux
-                        
+                        dispatch(loginUser(dataToSubmit))
+                        .then(res => {
+                            console.log(res)
+                            if(res.payload.loginSuccess){
+                                props.history.push('/') 
+                            } else {
+                                setFormErrorMessage('Check your email or password again')
+                            }
+                        })
+                        .catch(err => {
+                            setFormErrorMessage('Error Logging in. Check your email or password');
+                            setTimeout(() => {
+                                setFormErrorMessage('')
+                            }, 5000)
+                        })
+                        setSubmitting(false)
                     }, 500)
                 }}
             >
@@ -60,15 +67,76 @@ function LoginPage(props) {
                 } = props;
 
                 return (
-                    <div>
+                    <div className='login-page'>
+                        <h1>Login</h1>
+                        <Form onSubmit={handleSubmit}>
+                            <div className="form-group">
+                                <label htmlFor="email">Email</label>
+                                <Field 
+                                    id="email" 
+                                    type="email" 
+                                    value={values.email}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    placeholder="Enter Your Email" 
+                                    className={
+                                        errors.email && touched.email ? 'text-input error' : 'text-input'
+                                    } 
+                                />
+                                {touched.email && errors.email && (
+                                    <div className='input-error-feedback'>{errors.email}</div>
+                                )}
+                            </div>
 
+                            <div className="form-group">
+                                <label htmlFor="password">Password</label>
+                                <Field 
+                                    id="password" 
+                                    type="password" 
+                                    value={values.password}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    placeholder="Enter Your Password" 
+                                    className={
+                                        errors.password && touched.password ? 'text-input error' : 'text-input'
+                                    } 
+                                />
+                                {touched.password && errors.password && (
+                                    <div className='input-error-feedback'>{errors.password}</div>
+                                )}
+                            </div>
+
+                            {formErrorMessage && (
+                                <label>
+                                    <p style={
+                                        {
+                                            color: '#ff000bf', 
+                                            fontSize: '0.7rem', 
+                                            border: '1px solid', 
+                                            padding: '1rem', 
+                                            borderRadius: '10px'}
+                                        }>
+                                        {formErrorMessage}
+                                    </p>
+                                </label>
+                            )}
+                            
+                            <div> 
+                                <a></a>
+                                <div>
+                                    <button type='primary' htmlFor='submit' disabled={isSubmitting} onSubmit={handleSubmit}>Log In</button>
+                                </div>
+                                Or <a>Register Now</a>
+
+                            </div>
+
+
+                        </Form>
                     </div>
                 )
             }}
 
             </Formik>
-            
-        </div>
     )
 }
 
