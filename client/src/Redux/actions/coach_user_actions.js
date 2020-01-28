@@ -7,8 +7,6 @@ export function registerUser(dataToSubmit){
     .then(res => res.data)
     .catch(err => err)
 
-    console.log(request)
-
     return {
         type: REGISTER_USER,
         payload: request

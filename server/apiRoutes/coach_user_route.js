@@ -30,10 +30,25 @@ router.post('/register', (req, res) => {
                 error: err
             })
         }
-        return res.status(200).json({
-            success: true,
-            new_user: coach_user
+
+        // Generate token
+        coach_user.generateToken((err, user) => {
+            console.log(user)
+            if(err) {
+                return res.status(400).send(err);
+            }
+
+            res.cookie("w_authExp", user.tokenExp);
+            res.cookie('w_auth', user.token).status(200).json({
+                loginSuccess: true,
+                user: user,
+            })
         })
+
+        // return res.status(200).json({
+        //     success: true,
+        //     new_user: coach_user
+        // })
     })
 })
 

@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {withRouter, Redirect} from 'react-router-dom'
+import {withRouter, Redirect, NavLink} from 'react-router-dom'
 import {useSelector} from 'react-redux'
 import axios from 'axios'
 
@@ -25,18 +25,32 @@ function LoginSection(props) {
         }, 1000)
     }
 
-    
     if(user.userData && !user.userData.isAuth){
         return (
-            <div className='login-button'>
-                {redirect ? <Redirect to='/login' /> : null}
-                <button onClick={() => toLoginPage()} >Coach Login</button>
+            <div className='navbar_real'>
+                <div className='nav-links'>
+                        <NavLink exact to='/'>Home</NavLink>
+                        <NavLink exact to='/athletes'>Athletes</NavLink>
+                        <NavLink exact to='/coaches'>Coaches</NavLink>
+                </div>
+                <div className='login-button'>
+                    {redirect ? <Redirect to='/login' /> : null}
+                    <button onClick={() => toLoginPage()} >Coach Login</button>
+                </div>
             </div>
         )
     } else {
         return (
-            <div className='logout-button'>
-                <button onClick={logoutHandler}>Logout</button>
+            <div className='navbar_real'>
+                <div className='nav-links'>
+                        <NavLink exact to='/'>Home</NavLink>
+                        <NavLink exact to='/athletes'>Athletes</NavLink>
+                        <NavLink exact to='/coaches'>Coaches</NavLink>
+                        <NavLink exact to='/coach-admin'>Admin</NavLink>
+                </div>
+                <div className='logout-button'>
+                    <button onClick={logoutHandler}>Logout</button>
+                </div>
             </div>
         )
     } 
