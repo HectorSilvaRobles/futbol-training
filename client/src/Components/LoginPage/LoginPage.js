@@ -36,7 +36,6 @@ function LoginPage(props) {
                         // sending user input data to loginUser in redux
                         dispatch(loginUser(dataToSubmit))
                         .then(res => {
-                            console.log(res)
                             if(res.payload.loginSuccess){
                                 props.history.push('/') 
                             } else {
