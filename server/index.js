@@ -27,6 +27,9 @@ mongoose.connect(`${process.env.MONGODB_URI}`, {
 // Coach User endpoints
 app.use('/api/coach-users', require('./apiRoutes/coach_user_route'));
 
+app.use('/api/athletes', require('./apiRoutes/athlete_route'));
+
+
 const port = process.env.PORT || 4000
 
 app.listen(port, () => console.log(`server running on port ${port}`))
