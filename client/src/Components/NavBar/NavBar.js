@@ -32,12 +32,7 @@ export class NavBar extends Component {
                 <div className='nav-logo'>
                     <img src={logo} alt='futbol training logo' onClick={() => this.toHomePage()} />
                 </div>
-                <div className='nav-links'>
-                    <NavLink exact to='/'>Home</NavLink>
-                    <NavLink exact to='/athletes'>Athletes</NavLink>
-                    <NavLink exact to='/coaches'>Coaches</NavLink>
-                </div>
-                <div>
+                <div className='navbar_links'>
                     <LoginSection />
                 </div>
             </div>

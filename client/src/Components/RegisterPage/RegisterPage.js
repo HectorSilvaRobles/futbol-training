@@ -91,11 +91,12 @@ function RegisterPage(props){
                         accountRole: values.accountRole
                     };
 
-                    console.log(dataToSubmit)
                     dispatch(registerUser(dataToSubmit)).then(res => {
-                        if(res.payload.success){
+            
+                        if(res.payload.loginSuccess){
                             props.history.push('/')
-                        } else if (res.payload.response.data.error.errmsg){
+                        } 
+                        else if (res.payload.response.data.error.errmsg){
                             alert('Email has already been registered, Login or choose a different email')
                         }
                          else {
