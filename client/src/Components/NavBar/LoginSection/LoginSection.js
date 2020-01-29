@@ -46,7 +46,7 @@ function LoginSection(props) {
                         <NavLink exact to='/'>Home</NavLink>
                         <NavLink exact to='/athletes'>Athletes</NavLink>
                         <NavLink exact to='/coaches'>Coaches</NavLink>
-                        <NavLink exact to='/coach-admin'>Admin</NavLink>
+                        <NavLink exact to='/coach-dashboard'>Dashboard</NavLink>
                 </div>
                 <div className='logout-button'>
                     <button onClick={logoutHandler}>Logout</button>
