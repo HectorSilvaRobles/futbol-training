@@ -55,4 +55,24 @@ router.get('/all-athletes', (req, res) => {
 })
 
 
+// Update athlete details in database, endpoint
+router.put('/update-athlete/:athlete_id', (req, res, next) => {
+    var param = req.params.athlete_id
+    Athletes.findByIdAndUpdate(param, req.body, (err, updated_athlete) => {
+        if(err){
+            return res.status(400).json({
+                message: 'Could not update athlete information',
+                error: err
+            })
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: 'Successfully updated athletes information',
+            updated_athlete: updated_athlete
+        })
+    })
+})
+
+
 module.exports = router

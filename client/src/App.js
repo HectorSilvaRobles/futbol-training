@@ -9,7 +9,7 @@ import LoginPage from './Components/LoginPage/LoginPage'
 import AthletesPage from './Components/AthletesPage/AthletesPage'
 import CoachesPage from './Components/CoachesPage/CoachesPage'
 import NavBar from './Components/NavBar/NavBar'
-import AdminCoach from './Components/AdminCoach.js/AdminCoach'
+import CoachDashboard from './Components/CoachDashboard/CoachDashboard'
 
 
 
@@ -24,7 +24,7 @@ function App() {
           <Route exact path='/login' component={Auth(LoginPage, false)} />
           <Route exact path='/athletes' component={Auth(AthletesPage, null)} />
           <Route exact path='/coaches' component={Auth(CoachesPage, null)} />
-          <Route exact path='/coach-admin' component={Auth(AdminCoach, true)} />
+          <Route exact path='/coach-dashboard' component={Auth(CoachDashboard, true)} />
         </Switch>
       </div>
     </div>
