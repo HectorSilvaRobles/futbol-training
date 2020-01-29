@@ -22,10 +22,8 @@ function RegisterPage(props){
              const validImageTypes = ["image/jpeg", "image/png"]
  
              if(validImageTypes.includes(fileType)){
-                 console.log(file)
                  setError('')
                  setImg(file)
-                 console.log(image)
              } else {
                  setError('Please select an Image to upload, 1')
              }
@@ -34,7 +32,6 @@ function RegisterPage(props){
      }
  
      const handleUpdate = () => {
-        console.log(image)
          if(image){
              const uploadTask = storage.ref(`profile_pic/${image.name}`).put(image);
      
@@ -92,7 +89,6 @@ function RegisterPage(props){
                     };
 
                     dispatch(registerUser(dataToSubmit)).then(res => {
-            
                         if(res.payload.loginSuccess){
                             props.history.push('/')
                         } 
