@@ -11,9 +11,20 @@ import CoachesPage from './Components/CoachesPage/CoachesPage'
 import NavBar from './Components/NavBar/NavBar'
 import CoachDashboard from './Components/CoachDashboard/CoachDashboard'
 
+// getting all athletes
+import {getAllAthletes} from './Redux/actions/athlete_actions'
+import {useDispatch} from 'react-redux'
 
 
 function App() {
+
+  // getting all athletes
+  const dispatch = useDispatch()
+    dispatch(getAllAthletes()).then(res => {
+        return
+    })
+
+
   return (
     <div className="App">
       <NavBar />
