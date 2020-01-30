@@ -29,9 +29,9 @@ function LoginSection(props) {
         return (
             <div className='navbar_real'>
                 <div className='nav-links'>
-                        <NavLink exact to='/'>Home</NavLink>
-                        <NavLink exact to='/athletes'>Athletes</NavLink>
-                        <NavLink exact to='/coaches'>Coaches</NavLink>
+                        <NavLink exact to='/' className='navlink'>Home</NavLink>
+                        <NavLink exact to='/athletes' className='navlink'>Athletes</NavLink>
+                        <NavLink exact to='/coaches' className='navlink'>Coaches</NavLink>
                 </div>
                 <div className='login-button'>
                     {redirect ? <Redirect to='/login' /> : null}
@@ -43,10 +43,10 @@ function LoginSection(props) {
         return (
             <div className='navbar_real'>
                 <div className='nav-links'>
-                        <NavLink exact to='/'>Home</NavLink>
-                        <NavLink exact to='/athletes'>Athletes</NavLink>
-                        <NavLink exact to='/coaches'>Coaches</NavLink>
-                        <NavLink exact to='/coach-dashboard'>Dashboard</NavLink>
+                        <NavLink exact to='/' className='navlink'>Home</NavLink>
+                        <NavLink exact to='/athletes' className='navlink'>Athletes</NavLink>
+                        <NavLink exact to='/coaches' className='navlink'>Coaches</NavLink>
+                        <NavLink exact to='/coach-dashboard' className='navlink'>Dashboard</NavLink>
                 </div>
                 <div className='logout-button'>
                     <button onClick={logoutHandler}>Logout</button>

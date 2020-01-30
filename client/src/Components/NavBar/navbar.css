@@ -16,11 +16,16 @@
     
 }
 
-.nav-links > a {
+.navlink {
     color: white;
     text-decoration: none;
     font-weight: bold;
     text-transform: uppercase;
+}
+
+.navlink:hover {
+    text-decoration: none;
+    color: red;
 }
 
 .login-button{
