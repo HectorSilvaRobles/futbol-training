@@ -3,24 +3,30 @@ import {Formik, Form, Field} from 'formik';
 import * as Yup from 'yup';
 import {Modal} from 'react-bootstrap'
 import {storage} from '../../../../firebaseConfig'
+import {useDispatch} from 'react-redux'
+import {addAthlete} from '../../../../Redux/actions/athlete_actions'
 
 function AddAthleteModal(props){
+    const dispatch = useDispatch();
+
+    // Check to see if we added a new athlete successfully
+    const [uploadSuccess, setUploadSuccess] = useState(false)
+
 
     // Modal handler for opening and closing modals
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+
     // Uploading athlete picture to firebase and getting back the URL to image
     const [image, setImg] = useState(null);
     const [url, setUrl] = useState(null)
-    const [error, setError] = useState('')
+    const [error, setError] = useState(null)
 
     const handleFileUpload = (event) => {
-    
         const file = event.target.files[0]
-        console.log(file)
-
+        
         if(file){
             const fileType = file['type'];
             const validImageTypes = ['image/jpeg', 'image/png']
@@ -53,16 +59,16 @@ function AddAthleteModal(props){
                 () => {
                     storage.ref('athlete/athlete_pic').child(image.name).getDownloadURL()
                     .then(url => {
-                        console.log('this is the url', url)
+                        
                         setUrl(url)
                     })
                 }
             )
+            
         } else {
             setError('Error please choose an image to upload')
         }
     }
-
 
     const CustomInputComponent = () => (
         <div>
@@ -78,20 +84,36 @@ function AddAthleteModal(props){
                         lastname: '',
                         position: '',
                         age: '',
-                        athlete_pic: ''
+                        athlete_pic: url
                     }}
 
-                    onSubmit={(values, {setSubmitting}) => {
+                    onSubmit={(values, {setSubmitting, resetForm}) => {
                         setTimeout(() => {
                             let dataToSubmit = {
                                 firstname: values.firstname,
                                 lastname: values.lastname,
                                 position: values.position,
                                 age: values.age,
-                                athlete_pic: values.athlete_pic
+                                athlete_pic: url
                             }
-                            console.log(dataToSubmit)
-                            setSubmitting(false)
+                            
+
+                            if(!dataToSubmit.athlete_pic){
+                                
+                                setError('Please add athlete picture')
+                            } else {
+                                dispatch(addAthlete(dataToSubmit)).then(res => {
+                                    
+                                    if(res.payload.success){
+                                        setUploadSuccess(true)
+                                        alert(`Added ${res.payload.new_athlete.firstname} ${res.payload.new_athlete.lastname}`)
+                                    }
+                                })
+                                resetForm();
+                                setSubmitting(false)
+                            }
+
+                            
                         }, 500)
                     }}
                     
@@ -100,12 +122,19 @@ function AddAthleteModal(props){
                         lastname: Yup.string().required('Athlete\'s last name is required'),
                         position: Yup.string().required('Athlete\'s position is required'),
                         age: Yup.number().required('Athlete\'s age is required'),
-                        athlete_pic: Yup.string().required('Athlete\'s picture is required')
+                        // athlete_pic: Yup.string().required('Athlete\'s picture is required')
                     })}
                 >
                 {props => {
-                    const {values, touched, errors, isSubmitting, handleChange, handleBlur, handleSubmit } = props
-                    console.log(values)
+                    const {values, touched, errors, isSubmitting, handleChange, handleBlur, handleSubmit} = props
+
+                    // reset form after successfully adding athlete
+                    const resetForm = () => {
+                        setUploadSuccess(false)
+                        handleClose()
+                        return;
+                    }
+                    
                     return (
                         <div>
                             <button onClick={handleShow}>Add Athlete</button>
@@ -153,7 +182,7 @@ function AddAthleteModal(props){
                                             <label htmlFor="position">Position</label>
                                             <Field 
                                                 id="position" 
-                                                type="text" 
+                                                component='select'
                                                 value={values.position}
                                                 onChange={handleChange}
                                                 onBlur={handleBlur}
@@ -161,7 +190,14 @@ function AddAthleteModal(props){
                                                 className={
                                                     errors.position && touched.position ? 'text-input error' : 'text-input'
                                                 } 
-                                            />
+                                            >
+                                                <option value=''>Select</option>
+                                                <option value='Forward'>Forward</option>
+                                                <option value='Midfielder'>Midfielder</option>
+                                                <option value='Defender'>Defender</option>
+                                                <option value='Goalie'>Goalie</option>
+                                                
+                                            </Field>
                                             {touched.position && errors.position && (
                                                 <div className='input-error-feedback'>{errors.position}</div>
                                             )}
@@ -184,14 +220,20 @@ function AddAthleteModal(props){
                                             )}
                                         </div>
                                         <div className='form-group'>
-                                                <Field id='athlete_pic' as={CustomInputComponent} type='text' value={url} onChange={handleChange} onBlur={handleBlur} />
-                                                {touched.athlete_pic && errors.athlete_pic && (
-                                                    <div className='input-error-feedback'>{errors.athlete_pic}</div>
-                                                )}
+                                                <Field 
+                                                    id='athlete_pic' 
+                                                    as={CustomInputComponent} 
+                                                    type='text' 
+                                                    onBlur={handleBlur} 
+                                                />
+                                                <div>
+                                                    <p>{error}</p>
+                                                </div>
                                         </div>
                                         <div>
                                             <button variant="secondary" onClick={handleClose}>Close</button>
-                                            <button type="submit"  disabled={isSubmitting} >Save Changes</button>
+                                            <button type="submit" >Save Changes</button>
+                                            {uploadSuccess ? resetForm() : null}
                                         </div>
                                     </Form>
                                 </Modal.Body>
