@@ -22,3 +22,14 @@ export function addAthlete(dataToSubmit){
         payload: request
     }
 }
+
+export function removeAthlete(athleteId){
+    const request = axios.delete(`/api/athletes/remove-athlete/${athleteId}`)
+    .then(res => res.data)
+    .catch(err => err)
+
+    return {
+        type: REMOVE_ATHLETE,
+        payload: request
+    }
+}
