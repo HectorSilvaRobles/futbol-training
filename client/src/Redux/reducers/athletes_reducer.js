@@ -1,6 +1,11 @@
 import {ALL_ATHLETES, ADD_ATHLETE, REMOVE_ATHLETE, UPDATE_ATHLETE} from '../actions/types'
 
-export default function(state = {}, action){
+const initialState = {
+    athletes: null,
+    new_athlete: null,
+    
+}
+export default function(state = initialState, action){
     switch(action.type){
         case ALL_ATHLETES:
             return {...state, athletes: action.payload}

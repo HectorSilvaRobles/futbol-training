@@ -17,6 +17,7 @@ export function addAthlete(dataToSubmit){
     .then(res => res.data)
     .catch(err => err)
 
+
     return {
         type: ADD_ATHLETE,
         payload: request
