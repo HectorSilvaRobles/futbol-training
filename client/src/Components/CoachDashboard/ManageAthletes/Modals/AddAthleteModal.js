@@ -4,7 +4,7 @@ import * as Yup from 'yup';
 import {Modal} from 'react-bootstrap'
 import {storage} from '../../../../firebaseConfig'
 import {useDispatch} from 'react-redux'
-import {addAthlete} from '../../../../Redux/actions/athlete_actions'
+import {addAthlete, getAllAthletes} from '../../../../Redux/actions/athlete_actions'
 
 function AddAthleteModal(props){
     const dispatch = useDispatch();
@@ -99,13 +99,12 @@ function AddAthleteModal(props){
                             
 
                             if(!dataToSubmit.athlete_pic){
-                                
                                 setError('Please add athlete picture')
                             } else {
                                 dispatch(addAthlete(dataToSubmit)).then(res => {
-                                    
                                     if(res.payload.success){
                                         setUploadSuccess(true)
+                                        dispatch(getAllAthletes())
                                         alert(`Added ${res.payload.new_athlete.firstname} ${res.payload.new_athlete.lastname}`)
                                     }
                                 })

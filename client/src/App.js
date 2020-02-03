@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import {Route, Switch} from 'react-router-dom'
 import Auth from './Hoc/auth'
@@ -13,16 +13,18 @@ import CoachDashboard from './Components/CoachDashboard/CoachDashboard'
 
 // getting all athletes
 import {getAllAthletes} from './Redux/actions/athlete_actions'
-import {useDispatch} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 
 
 function App() {
 
   // getting all athletes
   const dispatch = useDispatch()
-    dispatch(getAllAthletes()).then(res => {
-        return
-    })
+  
+  dispatch(getAllAthletes()).then(res => {
+    console.log(res)
+  })
+ 
 
 
   return (

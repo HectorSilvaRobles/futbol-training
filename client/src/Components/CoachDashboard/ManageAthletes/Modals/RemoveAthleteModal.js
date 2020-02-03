@@ -1,9 +1,15 @@
 import React, {useState, useEffect} from 'react';
 import {Modal} from 'react-bootstrap';
 import {useSelector, useDispatch} from 'react-redux';
-import {removeAthlete} from '../../../../Redux/actions/athlete_actions'
+import {removeAthlete, getAllAthletes} from '../../../../Redux/actions/athlete_actions'
 
-function RemoveAthleteModal() {
+function RemoveAthleteModal(props) {
+    console.log(props)
+    // Modal handler for opening and closing modals
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
     const dispatch = useDispatch()
     const athletes = useSelector(state => state.athletes_reducer.athletes)
     console.log(athletes)
@@ -25,7 +31,10 @@ function RemoveAthleteModal() {
         if(athletes_to_remove.length > 0){
             athletes_to_remove.map(val => {
                 dispatch(removeAthlete(val)).then(res => {
-                    console.log(res)
+                    // update state at all_athletes
+                    dispatch(getAllAthletes())
+                    // Close the modal
+                    handleClose()
                 })
             })
         }
@@ -46,9 +55,16 @@ function RemoveAthleteModal() {
     }
     return (
         <div>
-            Remove Athlete
-            {athlete_select}
-            <button onClick={() => handleSubmit() }>Submit</button>
+            <button onClick={handleShow}>Remove Athlete</button>
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header>
+                    <Modal.Title>Remove Athlete</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    {athlete_select} 
+                    <button onClick={() => handleSubmit() }>Submit</button>
+                </Modal.Body>
+            </Modal>
         </div>
     )
 }
