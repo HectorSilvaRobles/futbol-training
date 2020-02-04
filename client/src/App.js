@@ -17,15 +17,12 @@ import {useDispatch, useSelector} from 'react-redux'
 
 
 function App() {
-
   // getting all athletes
   const dispatch = useDispatch()
   
   dispatch(getAllAthletes()).then(res => {
     console.log(res)
   })
- 
-
 
   return (
     <div className="App">

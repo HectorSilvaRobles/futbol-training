@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import ManageAthletes from './ManageAthletes/ManageAthletes'
 import {useSelector} from 'react-redux'
-;
+
+import AccordionComp from '../Accordion/Accordion'
+
 function CoachDashboard (props){
     // Check if coach user is 'Admin' in account role
     const coach_user = useSelector(state => state.coach_user)
@@ -14,13 +16,26 @@ function CoachDashboard (props){
             show = true
         }
     }
-    
 
     return (
-        <div>
+        <div className='coach-dashboard'>
             admin coach
-            {show ? <ManageAthletes /> : null}
-            {/* <ManageAthletes /> */}
+            <AccordionComp 
+                coachPostTitle='Coach Post' 
+                coachPostContent='coach posts will go here'
+
+                performanceTitle='Log Performance'
+                performanceContent='log performances here'
+
+                highlightsTitle='Upload Highlights'
+                highlightsContent='highlight content goes here'
+
+                adminShow={show}
+                manageAthleteTitle='Manage Athletes'
+                manageAthleteContent={<ManageAthletes />}
+            
+            />
+           
          </div>
     )
 }
