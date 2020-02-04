@@ -4,7 +4,6 @@ import {useSelector, useDispatch} from 'react-redux';
 import {removeAthlete, getAllAthletes} from '../../../../Redux/actions/athlete_actions'
 
 function RemoveAthleteModal(props) {
-    console.log(props)
     // Modal handler for opening and closing modals
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
