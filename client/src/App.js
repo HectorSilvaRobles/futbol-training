@@ -10,6 +10,7 @@ import AthletesPage from './Components/AthletesPage/AthletesPage'
 import CoachesPage from './Components/CoachesPage/CoachesPage'
 import NavBar from './Components/NavBar/NavBar'
 import CoachDashboard from './Components/CoachDashboard/CoachDashboard'
+import AthleteProfilePage from './Components/AthleteProfilePage/AthleteProfilePage'
 
 // getting all athletes
 import {getAllAthletes} from './Redux/actions/athlete_actions'
@@ -35,6 +36,7 @@ function App() {
           <Route exact path='/athletes' component={Auth(AthletesPage, null)} />
           <Route exact path='/coaches' component={Auth(CoachesPage, null)} />
           <Route exact path='/coach-dashboard' component={Auth(CoachDashboard, true)} />
+          <Route exact path='/athlete/:id' component={Auth(AthleteProfilePage, null)} />
         </Switch>
       </div>
     </div>
