@@ -32,10 +32,18 @@ export class AthleteProfilePage extends Component {
         const {athlete} = this.state
         return (
             <div className='athlete-profile'>
-                <div>
-                    <h1>{athlete.firstname} {athlete.lastname}</h1>
-                    <h2>Postion: {athlete.position}</h2>
-                    <h3>Age: {athlete.age}</h3>
+                <div className='profile-header'>
+                    <div className='profile-header-image'>
+                        <img src={athlete.athlete_pic} alt='athlete profile pic' />
+                    </div>
+                    <div className='profile-header-info'>
+                        <h1>{athlete.firstname} {athlete.lastname}</h1>
+                        <h2>Postion: {athlete.position}</h2>
+                        <h3>Age: {athlete.age}</h3>
+                    </div>
+                </div>
+                <div className='profile-options'>
+
                 </div>
             </div>
         )
@@ -44,9 +52,8 @@ export class AthleteProfilePage extends Component {
     render() {
         const {athlete} = this.state
         return (
-            <div>
+            <div className='athlete-profile-main'>
                 {athlete ? this.handleDisplayAthlete() : null}
-                Athlete Profile
             </div>
         )
     }
