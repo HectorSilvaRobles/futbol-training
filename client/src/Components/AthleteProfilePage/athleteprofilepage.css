@@ -1,0 +1,73 @@
+.athlete-profile-main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.athlete-profile {
+    /* background: red; */
+    width: 60%;
+    height: auto;
+    padding: 50px 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Profile header styling */
+.profile-header-image {
+    /* background: green; */
+    height: 100%;
+    width: 40%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.profile-header-image > img {
+    width: 200px;
+    height: 200px;
+    position: cover;
+    border-radius: 50%;
+    border: solid 8px #C13540;
+}
+.profile-header-info {
+    /* background: orange; */
+    width: 60%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: left;
+}
+.profile-header-info > h1 {
+    font-weight: bold;
+    font-size: 50px;
+}
+.profile-header-info > h2 {
+    font-weight: 400;
+    font-size: 35px;
+}
+.profile-header-info > h3 {
+    font-weight: 400;
+    font-size: 35px;
+
+}
+.profile-header {
+    background: #F7F7F7;
+    height: 30vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: solid 3px #D9D5D5;
+    border-radius: 20px;
+    box-shadow: 2px 5px 10px grey;
+}
+
+
+/* Profile options bar */
+.profile-options {
+    background: #F7F7F7;
+    height: 15vh;
+    border-radius: 20px;
+    border: solid 3px #D9D5D5;
+    box-shadow: 1px 5px 10px grey;
+    margin: 50px 0;
+}

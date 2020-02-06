@@ -29,7 +29,7 @@ function AthletesPage(props) {
             )
         })
     } else {
-        // alert('loading')
+        alert('loading')
     }
 
     console.log(athlete, redirect)
