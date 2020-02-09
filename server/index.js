@@ -30,6 +30,9 @@ app.use('/api/coach-users', require('./apiRoutes/coach_user_route'));
 // Athletes Endpoints
 app.use('/api/athletes', require('./apiRoutes/athlete_route'));
 
+// Coach to Athlete Endpoints
+app.use('/api/coach_to_athlete', require('./apiRoutes/coach_to_athlete_route'))
+
 const port = process.env.PORT || 4000
 
 app.listen(port, () => console.log(`server running on port ${port}`))

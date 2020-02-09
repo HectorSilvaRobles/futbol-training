@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const {Athletes} = require('../models/athleteSchema');
 
-
 // Adding new athlete to database endpoint
 router.post('/add-athlete', (req, res) => {
     // creating a new athlete

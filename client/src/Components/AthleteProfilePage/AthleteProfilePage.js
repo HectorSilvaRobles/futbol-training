@@ -38,7 +38,7 @@ export class AthleteProfilePage extends Component {
                     </div>
                     <div className='profile-header-info'>
                         <h1>{athlete.firstname} {athlete.lastname}</h1>
-                        <h2>Postion: {athlete.position}</h2>
+                        <h2>Position: {athlete.position}</h2>
                         <h3>Age: {athlete.age}</h3>
                     </div>
                 </div>
