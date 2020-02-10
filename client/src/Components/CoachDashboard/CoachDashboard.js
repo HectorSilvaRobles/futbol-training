@@ -1,8 +1,10 @@
 import React from 'react'
 import ManageAthletes from './ManageAthletes/ManageAthletes'
+import CoachPosts from './CoachPosts/CoachPosts'
 import {useSelector} from 'react-redux'
 
 import AccordionComp from '../Accordion/Accordion'
+
 
 function CoachDashboard (props){
     // Check if coach user is 'Admin' in account role
@@ -22,7 +24,7 @@ function CoachDashboard (props){
             admin coach
             <AccordionComp 
                 coachPostTitle='Coach Post' 
-                coachPostContent='coach posts will go here'
+                coachPostContent={<CoachPosts />}
 
                 performanceTitle='Log Performance'
                 performanceContent='log performances here'

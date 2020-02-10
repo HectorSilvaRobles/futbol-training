@@ -11,7 +11,6 @@ function RemoveAthleteModal(props) {
 
     const dispatch = useDispatch()
     const athletes = useSelector(state => state.athletes_reducer.athletes)
-    console.log(athletes)
 
     let athlete_select
     let athletes_to_remove = []
@@ -22,7 +21,6 @@ function RemoveAthleteModal(props) {
         } else {
             athletes_to_remove = athletes_to_remove.filter(e => e !== athlete._id)
         }
-        console.log('athletes to remove array', athletes_to_remove)
     }
 
     const handleSubmit = () => {
