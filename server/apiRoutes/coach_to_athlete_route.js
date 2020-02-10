@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const {Athletes} = require('../models/athleteSchema')
 
+
 // Create a new coach post 
 router.put('/coach-post/:athlete_id', (req, res, next) => {
     const param = req.params.athlete_id
@@ -15,7 +16,7 @@ router.put('/coach-post/:athlete_id', (req, res, next) => {
         return res.status(200).json({
             success: true,
             message: "Successfully created a new coach post to athlete's newsfeed",
-            updated_athlete: updated_athlete
+            created_post: req.body
         })
     })
 })
@@ -31,7 +32,7 @@ router.delete('/remove-coach-post/:athlete_id', (req, res) => {
         {$pull : {'coach_posts' : {"_id" : post}}}
     ).then(() => res.status(200).json({
         success: true,
-        message: "Successfully removed a coach post from athlete's newsfeed",
+        message: "Successfully removed a coach post from athlete's newsfeed"
     }))
     .catch(err => res.status(400).json({
         success: false,
