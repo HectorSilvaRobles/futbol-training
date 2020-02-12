@@ -1,0 +1,23 @@
+.athlete-select {
+    background: blue;
+    width: 85%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 30px 0px;
+}
+
+.athlete-select-option {
+    background: orange;
+    width: 20%;
+    height: 5%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 15px;
+}
+
+.athlete-select-option > h1 {
+    font-size: 16px;
+    margin: 10px;
+}

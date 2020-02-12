@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import {useSelector} from 'react-redux'
+import './athleteselect.css'
 
 function AthleteSelect(props) {
     const athletes = useSelector(state => state.athletes_reducer.athletes)
@@ -15,18 +16,16 @@ function AthleteSelect(props) {
         const {all_Athletes} = athletes
         athlete_select = all_Athletes.map(val => {
             return (
-                <div key={val._id}>
-                    <div>
+                <div key={val._id} className='athlete-select-option'>
                         <input type="checkbox" onClick={() => handleSelect(val)} />
                         <h1>{val.firstname[0]}. {val.lastname}</h1>
-                    </div>
                 </div>
             )
         })
     }
 
     return (
-        <div>
+        <div className='athlete-select'>
             {athlete_select}
         </div>
     )
