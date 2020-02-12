@@ -10,7 +10,8 @@ export class CoachPosts extends Component {
         super(props)
 
         this.state = {
-            selectedAthletes : []
+            selectedAthletes : [],
+            errorPost: false
         }
     }
 
@@ -18,6 +19,27 @@ export class CoachPosts extends Component {
     handleSubmit = () => {
         const {_id, lastname, profile_pic} = this.props.coach_user.userData
         let textArea = document.getElementById('coach-post-text').value
+        let coachType = document.getElementById('coach-post-type').value
+
+
+        // Error handling if textarea is empty
+        if(!textArea){
+            this.setState({errorPost: true})
+        } else {
+            this.setState({errorPost: false})
+        }
+
+         // Error handling if coachType is empty
+         if(!coachType){
+            this.setState({errorPost: true})
+        } else {
+            this.setState({errorPost: false})
+        }
+
+
+        console.log(coachType)
+        console.log(textArea)
+
 
         // const dataToSubmit = {
         //     "coach_id" : _id,
@@ -45,7 +67,6 @@ export class CoachPosts extends Component {
 
     render() {
         console.log(this.state)
-        console.log(this.props)
         const {userData} = this.props.coach_user
 
         return (
@@ -60,12 +81,20 @@ export class CoachPosts extends Component {
                         <div className='coach-post-create-textarea'>
                             <textarea 
                                 cols='100' 
-                                rows='6' 
+                                rows='5' 
                                 maxLength='280' 
                                 placeholder='Create a coach post'
                                 id='coach-post-text'
                             ></textarea>
-                            
+                            {this.state.errorPost ? <div>Error jigga</div> : null}
+                            <div className='coach-post-create-select'>
+                                <h2>Post Type</h2>
+                                <select id='coach-post-type'>
+                                    <option value='' >Select</option>
+                                    <option value='coach-note' >Coach Note</option>
+                                    <option value='coach-reminder' >Coach Reminder</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                     <AthleteSelect callBack={this.callBackSelectedAthletes}  />
