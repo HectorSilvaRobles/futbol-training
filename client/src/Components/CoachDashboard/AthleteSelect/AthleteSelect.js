@@ -25,8 +25,11 @@ function AthleteSelect(props) {
     }
 
     return (
-        <div className='athlete-select'>
-            {athlete_select}
+        <div className='athlete-select-component'>
+            <h1>Select Athlete</h1>
+            <div className='athlete-select'>
+                {athlete_select}
+            </div>
         </div>
     )
 }
