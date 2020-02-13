@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import {createCoachPost} from '../../../Redux/actions/coach_to_athlete_actions'
 import './coachposts.css'
-
 import AthleteSelect from '../AthleteSelect/AthleteSelect'
 
 export class CoachPosts extends Component {
@@ -11,10 +10,10 @@ export class CoachPosts extends Component {
 
         this.state = {
             selectedAthletes : [],
-            error: false
+            error: false,
+            postSuccess: false
         }
     }
-
 
     handleSubmit = () => {
         const {lastname, profile_pic} = this.props.coach_user.userData
@@ -35,7 +34,11 @@ export class CoachPosts extends Component {
                     "coach_message" : textArea,
                     "athlete_id" : val
                 }
-                this.props.createCoachPost(dataToSubmit)
+                this.props.createCoachPost(dataToSubmit).then(res => {
+                    if(res.payload.success){
+                        this.setState({postSuccess: true})
+                    }
+                })
             })
         }
     }
@@ -51,14 +54,13 @@ export class CoachPosts extends Component {
         }  
     }
 
-
     render() {
         const {userData} = this.props.coach_user
-
         return (
             <div>
             { userData ?
-                <div className='coach-post-admin'>
+                <form className='coach-post-admin'>
+                    {this.state.postSuccess ? alert('success') : null}
                     <div className='coach-post-create-post'>
                     {this.state.errorPost ? alert('Error') : null}
                         <div className='coach-post-create-header'>
@@ -84,8 +86,8 @@ export class CoachPosts extends Component {
                         </div>
                     </div>
                     <AthleteSelect callBack={this.callBackSelectedAthletes}  />
-                    <button onClick={() => this.handleSubmit()} className='create-post-button'>Create Post</button>
-                </div>
+                    <button type={this.state.postSuccess ? 'reset' : null} onClick={() => this.handleSubmit()} className='create-post-button'>Create Post</button>
+                </form>
             :
             <div>Loading</div> 
             }
