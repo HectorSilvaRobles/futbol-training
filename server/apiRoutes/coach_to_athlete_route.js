@@ -6,6 +6,7 @@ const {Athletes} = require('../models/athleteSchema')
 // Create a new coach post 
 router.put('/coach-post/:athlete_id', (req, res, next) => {
     const param = req.params.athlete_id
+    
     Athletes.findByIdAndUpdate(param, { $push: req.body }, (err, updated_athlete) => {
         if(err){
             return res.status(400).json({
@@ -13,10 +14,11 @@ router.put('/coach-post/:athlete_id', (req, res, next) => {
                 error: err
             })
         }
+
         return res.status(200).json({
             success: true,
             message: "Successfully created a new coach post to athlete's newsfeed",
-            created_post: req.body
+            created_post: updated_athlete
         })
     })
 })
