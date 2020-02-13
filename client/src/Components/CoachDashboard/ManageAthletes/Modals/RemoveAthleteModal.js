@@ -24,7 +24,6 @@ function RemoveAthleteModal(props) {
     }
 
     const handleSubmit = () => {
-        console.log('submit', athletes_to_remove)
         if(athletes_to_remove.length > 0){
             athletes_to_remove.map(val => {
                 dispatch(removeAthlete(val)).then(res => {

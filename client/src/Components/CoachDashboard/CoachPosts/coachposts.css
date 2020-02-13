@@ -75,3 +75,14 @@
     border: solid #707070 1px;
 
 }
+
+.create-post-button {
+    background: #C13540;
+    color: white;
+    border: none;
+    margin: 20px 0;
+    height: 7vh;
+    width: 85%;
+    font-size : 25px;
+    font-weight: bold;
+}

@@ -16,7 +16,7 @@ const coachPostsSchema = mongoose.Schema({
         maxlength: 290,
         minglength: 10
     },
-    type_of_message : {
+    type_of_post : {
         type: String,
     }
 })

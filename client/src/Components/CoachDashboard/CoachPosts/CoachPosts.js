@@ -11,46 +11,33 @@ export class CoachPosts extends Component {
 
         this.state = {
             selectedAthletes : [],
-            errorPost: false
+            error: false
         }
     }
 
 
     handleSubmit = () => {
-        const {_id, lastname, profile_pic} = this.props.coach_user.userData
+        const {lastname, profile_pic} = this.props.coach_user.userData
         let textArea = document.getElementById('coach-post-text').value
         let coachType = document.getElementById('coach-post-type').value
 
-
         // Error handling if textarea is empty
-        if(!textArea){
+        if(!textArea || !coachType || this.state.selectedAthletes.length < 1){
             this.setState({errorPost: true})
         } else {
             this.setState({errorPost: false})
+
+            this.state.selectedAthletes.map(val => {
+                const dataToSubmit = {
+                    "coach_writer" : lastname,
+                    "coach_profile_pic": profile_pic,
+                    "type_of_post" : coachType,
+                    "coach_message" : textArea,
+                    "athlete_id" : val
+                }
+                this.props.createCoachPost(dataToSubmit)
+            })
         }
-
-         // Error handling if coachType is empty
-         if(!coachType){
-            this.setState({errorPost: true})
-        } else {
-            this.setState({errorPost: false})
-        }
-
-
-        console.log(coachType)
-        console.log(textArea)
-
-
-        // const dataToSubmit = {
-        //     "coach_id" : _id,
-        //     "coach_name" : lastname,
-        //     "coach_picture": profile_pic,
-        //     "type_of_post" : 'Coach Reminder',
-        //     "post" : 'Hey just reminding you of this'
-        // }
-
-        // console.log(dataToSubmit)
-        // createCoachPost(dataToSubmit)
     }
 
     callBackSelectedAthletes = (athlete_id) => {
@@ -66,7 +53,6 @@ export class CoachPosts extends Component {
 
 
     render() {
-        console.log(this.state)
         const {userData} = this.props.coach_user
 
         return (
@@ -74,6 +60,7 @@ export class CoachPosts extends Component {
             { userData ?
                 <div className='coach-post-admin'>
                     <div className='coach-post-create-post'>
+                    {this.state.errorPost ? alert('Error') : null}
                         <div className='coach-post-create-header'>
                             <img src={userData.profile_pic} alt='coach picture' />
                             <h1>Coach {userData.lastname}</h1>
@@ -86,19 +73,18 @@ export class CoachPosts extends Component {
                                 placeholder='Create a coach post'
                                 id='coach-post-text'
                             ></textarea>
-                            {this.state.errorPost ? <div>Error jigga</div> : null}
                             <div className='coach-post-create-select'>
                                 <h2>Post Type</h2>
                                 <select id='coach-post-type'>
                                     <option value='' >Select</option>
-                                    <option value='coach-note' >Coach Note</option>
-                                    <option value='coach-reminder' >Coach Reminder</option>
+                                    <option value='coach note' >Coach Note</option>
+                                    <option value='coach reminder' >Coach Reminder</option>
                                 </select>
                             </div>
                         </div>
                     </div>
                     <AthleteSelect callBack={this.callBackSelectedAthletes}  />
-                    <button onClick={() => this.handleSubmit()}>Click</button>
+                    <button onClick={() => this.handleSubmit()} className='create-post-button'>Create Post</button>
                 </div>
             :
             <div>Loading</div> 
@@ -112,4 +98,10 @@ const mapPropsToState = (reduxState) => {
     return reduxState
 }
 
-export default connect(mapPropsToState)(CoachPosts)
+const mapReduxState = {
+    createCoachPost
+}
+
+const myConnect = connect(mapPropsToState, mapReduxState)
+
+export default myConnect(CoachPosts)
