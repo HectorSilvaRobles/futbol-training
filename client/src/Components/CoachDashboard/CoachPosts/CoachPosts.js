@@ -25,7 +25,6 @@ export class CoachPosts extends Component {
             this.setState({errorPost: true})
         } else {
             this.setState({errorPost: false})
-
             this.state.selectedAthletes.map(val => {
                 const dataToSubmit = {
                     "coach_writer" : lastname,
@@ -54,15 +53,35 @@ export class CoachPosts extends Component {
         }  
     }
 
+
+    // Reset the component inputs after the coach post is successfully saved
+    handleReset = () => {
+        document.getElementById('coach-post-text').value = ''
+        document.getElementById('coach-post-type').value = ''
+        var selectedAthletes = document.getElementsByTagName('input');
+        for(var i = 0; i<selectedAthletes.length; i++){
+            selectedAthletes[i].checked = false
+        }
+
+        setTimeout(() => {
+            alert('Successful post')
+            this.setState({
+                selectedAthletes: [],
+                postSuccess: false
+            })
+        }, 500)
+    }
+
     render() {
         const {userData} = this.props.coach_user
+        console.log(this.state)
         return (
             <div>
             { userData ?
-                <form className='coach-post-admin'>
-                    {this.state.postSuccess ? alert('success') : null}
-                    <div className='coach-post-create-post'>
+                <div className='coach-post-admin'>
+                    {this.state.postSuccess ? this.handleReset() : null}
                     {this.state.errorPost ? alert('Error') : null}
+                    <div className='coach-post-create-post'>
                         <div className='coach-post-create-header'>
                             <img src={userData.profile_pic} alt='coach picture' />
                             <h1>Coach {userData.lastname}</h1>
@@ -86,8 +105,8 @@ export class CoachPosts extends Component {
                         </div>
                     </div>
                     <AthleteSelect callBack={this.callBackSelectedAthletes}  />
-                    <button type={this.state.postSuccess ? 'reset' : null} onClick={() => this.handleSubmit()} className='create-post-button'>Create Post</button>
-                </form>
+                    <button onClick={() => this.handleSubmit()} className='create-post-button'>Create Post</button>
+                </div>
             :
             <div>Loading</div> 
             }
