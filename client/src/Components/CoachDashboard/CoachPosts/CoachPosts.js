@@ -16,11 +16,11 @@ export class CoachPosts extends Component {
     }
 
     handleSubmit = () => {
-        const {lastname, profile_pic} = this.props.coach_user.userData
+        const {lastname, profile_pic, accountRole} = this.props.coach_user.userData
         let textArea = document.getElementById('coach-post-text').value
         let coachType = document.getElementById('coach-post-type').value
 
-        // Error handling if textarea is empty
+        // Error handling if textarea/coachType/selectedAthletes are empty
         if(!textArea || !coachType || this.state.selectedAthletes.length < 1){
             this.setState({errorPost: true})
         } else {
@@ -33,11 +33,19 @@ export class CoachPosts extends Component {
                     "coach_message" : textArea,
                     "athlete_id" : val
                 }
-                this.props.createCoachPost(dataToSubmit).then(res => {
-                    if(res.payload.success){
-                        this.setState({postSuccess: true})
-                    }
-                })
+
+                // If coach user account role is admin it will post, if not it will send it to a pending list where an admin will confirm it
+                if(accountRole == 'Admin') {
+                    this.props.createCoachPost(dataToSubmit).then(res => {
+                        console.log('hit')
+                        if(res.payload.success){
+                            this.setState({postSuccess: true})
+                        }
+                    })
+                } else {
+                    console.log('Sent to pending list')
+                }
+                
             })
         }
     }
@@ -59,6 +67,7 @@ export class CoachPosts extends Component {
         document.getElementById('coach-post-text').value = ''
         document.getElementById('coach-post-type').value = ''
         var selectedAthletes = document.getElementsByTagName('input');
+        
         for(var i = 0; i<selectedAthletes.length; i++){
             selectedAthletes[i].checked = false
         }
@@ -74,7 +83,6 @@ export class CoachPosts extends Component {
 
     render() {
         const {userData} = this.props.coach_user
-        console.log(this.state)
         return (
             <div>
             { userData ?

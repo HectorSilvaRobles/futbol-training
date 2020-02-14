@@ -8,8 +8,7 @@ const coachPostsSchema = mongoose.Schema({
         type: String
     },
     date_of_post : {
-        type: Date,
-        default: Date.now
+        type: String
     },
     coach_message : {
         type: String,
