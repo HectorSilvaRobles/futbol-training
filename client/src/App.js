@@ -17,13 +17,14 @@ import {getAllAthletes} from './Redux/actions/athlete_actions'
 import {useDispatch, useSelector} from 'react-redux'
 
 
-function App() {
+function App(props) {
   // getting all athletes
   const dispatch = useDispatch()
   
   dispatch(getAllAthletes()).then(res => {
     console.log(res)
   })
+  
 
   return (
     <div className="App">

@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import {NavLink, Redirect} from 'react-router-dom'
 import LoginSection from './LoginSection/LoginSection'
 import logo from '../../Media/logo.png'
+import {getAllRequest} from '../../Redux/actions/pending_actions'
+import {connect} from 'react-redux'
 import './navbar.css'
 
 export class NavBar extends Component {
@@ -11,6 +13,10 @@ export class NavBar extends Component {
         this.state = {
             redirect: false
         }
+    }
+
+    componentWillUpdate = () => {
+        console.log(this.props)
     }
 
     toHomePage = () => {
@@ -40,4 +46,14 @@ export class NavBar extends Component {
     }
 }
 
-export default NavBar
+const mapPropsToState = (reduxState) => {
+    return reduxState
+}
+
+const mapReduxToState = {
+    getAllRequest
+}
+
+const myConnect = connect(mapPropsToState, mapReduxToState)
+
+export default  myConnect(NavBar)
