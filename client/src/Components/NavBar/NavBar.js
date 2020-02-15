@@ -11,12 +11,8 @@ export class NavBar extends Component {
         super(props)
 
         this.state = {
-            redirect: false
+            redirect: false,
         }
-    }
-
-    componentWillUpdate = () => {
-        console.log(this.props)
     }
 
     toHomePage = () => {

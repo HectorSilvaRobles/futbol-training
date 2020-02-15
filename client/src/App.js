@@ -12,8 +12,9 @@ import NavBar from './Components/NavBar/NavBar'
 import CoachDashboard from './Components/CoachDashboard/CoachDashboard'
 import AthleteProfilePage from './Components/AthleteProfilePage/AthleteProfilePage'
 
-// getting all athletes
+// Updating the redux state
 import {getAllAthletes} from './Redux/actions/athlete_actions'
+import {getAllRequest} from './Redux/actions/pending_actions'
 import {useDispatch, useSelector} from 'react-redux'
 
 
@@ -22,10 +23,13 @@ function App(props) {
   const dispatch = useDispatch()
   
   dispatch(getAllAthletes()).then(res => {
-    console.log(res)
+    return
+  })
+
+  dispatch(getAllRequest()).then(res => {
+    return
   })
   
-
   return (
     <div className="App">
       <NavBar />

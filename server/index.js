@@ -33,6 +33,7 @@ app.use('/api/athletes', require('./apiRoutes/athlete_route'));
 // Coach to Athlete Endpoints
 app.use('/api/coach_to_athlete', require('./apiRoutes/coach_to_athlete_route'))
 
+// get all pending requests
 app.use('/api/pending', require('./apiRoutes/pending_route'))
 
 const port = process.env.PORT || 4000
