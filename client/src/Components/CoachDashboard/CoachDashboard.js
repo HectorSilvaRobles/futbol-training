@@ -5,7 +5,6 @@ import {useSelector} from 'react-redux'
 
 import AccordionComp from '../Accordion/Accordion'
 
-
 function CoachDashboard (props){
     // Check if coach user is 'Admin' in account role
     const coach_user = useSelector(state => state.coach_user)
