@@ -3,6 +3,7 @@ import './App.css';
 import {Route, Switch} from 'react-router-dom'
 import Auth from './Hoc/auth'
 
+
 import HomePage from './Components/Homepage/HomePage'
 import RegisterPage from './Components/RegisterPage/RegisterPage'
 import LoginPage from './Components/LoginPage/LoginPage'
@@ -33,7 +34,7 @@ function App(props) {
   return (
     <div className="App">
       <NavBar />
-      <div>
+      <div>   
         <Switch>
           <Route exact path='/' component={Auth(HomePage, null)} />
           <Route exact path='/register' component={Auth(RegisterPage, false)} />

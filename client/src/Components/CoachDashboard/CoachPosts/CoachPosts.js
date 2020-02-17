@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import {createCoachPost} from '../../../Redux/actions/coach_to_athlete_actions'
+import {sendRequest, getAllRequest} from '../../../Redux/actions/pending_actions'
 import './coachposts.css'
 import AthleteSelect from '../AthleteSelect/AthleteSelect'
 
@@ -20,38 +21,53 @@ export class CoachPosts extends Component {
         let textArea = document.getElementById('coach-post-text').value
         let coachType = document.getElementById('coach-post-type').value
 
+
         // Error handling if textarea/coachType/selectedAthletes are empty
         if(!textArea || !coachType || this.state.selectedAthletes.length < 1){
             this.setState({errorPost: true})
         } else {
             this.setState({errorPost: false})
+
             this.state.selectedAthletes.map(val => {
                 const dataToSubmit = {
                     "coach_writer" : lastname,
                     "coach_profile_pic": profile_pic,
                     "type_of_post" : coachType,
                     "coach_message" : textArea,
-                    "athlete_id" : val
+                    "athlete_id" : val,
+                    "typeOfEndpoint" : 'createCoachPost'
                 }
+
 
                 // If coach user account role is admin it will post, if not it will send it to a pending list where an admin will confirm it
                 if(accountRole == 'Admin') {
-                    this.props.createCoachPost(dataToSubmit).then(res => {
-                        console.log('hit')
+                    this.props.createCoachPost(dataToSubmit)
+                    .then(res => {
                         if(res.payload.success){
                             this.setState({postSuccess: true})
                         }
+                        this.props.getAllRequest()
                     })
+
                 } else {
-                    console.log('Sent to pending list')
+                    this.props.sendRequest(dataToSubmit)
+                    .then(res => {
+                        if(res.payload.success){
+                            this.setState({postSuccess: true})
+                            alert('You post was successfully created. Now waiting for approval.')
+                        }
+                        this.props.getAllRequest()
+
+                    })
                 }
                 
             })
         }
     }
 
+
+    // Add selected athlete to state 
     callBackSelectedAthletes = (athlete_id) => {
-        // Add selected athlete to state 
         if(!this.state.selectedAthletes.includes(athlete_id)){
             var joined = this.state.selectedAthletes.concat(athlete_id)
             this.setState({selectedAthletes: joined})
@@ -73,13 +89,13 @@ export class CoachPosts extends Component {
         }
 
         setTimeout(() => {
-            alert('Successful post')
             this.setState({
                 selectedAthletes: [],
                 postSuccess: false
             })
         }, 500)
     }
+
 
     render() {
         const {userData} = this.props.coach_user
@@ -128,7 +144,9 @@ const mapPropsToState = (reduxState) => {
 }
 
 const mapReduxState = {
-    createCoachPost
+    createCoachPost,
+    sendRequest,
+    getAllRequest
 }
 
 const myConnect = connect(mapPropsToState, mapReduxState)

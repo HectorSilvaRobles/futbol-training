@@ -1,5 +1,5 @@
 import React, { Component } from 'react' 
-import {NavLink, Redirect} from 'react-router-dom'
+import {Redirect} from 'react-router-dom'
 import LoginSection from './LoginSection/LoginSection'
 import logo from '../../Media/logo.png'
 import {getAllRequest} from '../../Redux/actions/pending_actions'
@@ -28,7 +28,13 @@ export class NavBar extends Component {
     }
 
     render() {
-        return (
+        let accRole
+        if(this.props.coach_user.userData){
+            const {accountRole} = this.props.coach_user.userData
+            accRole = accountRole
+        }
+
+        return (    
             <div className='navbar'>
                 {this.state.redirect ? <Redirect to='/' /> : null}
                 <div className='nav-logo'>
@@ -36,6 +42,7 @@ export class NavBar extends Component {
                 </div>
                 <div className='navbar_links'>
                     <LoginSection />
+                    {accRole =='Admin' ? <div>Hello admin</div> : null}
                 </div>
             </div>
         )
