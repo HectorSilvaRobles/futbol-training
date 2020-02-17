@@ -5,7 +5,6 @@ const {Pending} = require('../models/pendingSchema')
 // Send request to pending list 
 router.post('/send-request', (req, res ) => {
     const newRequest = new Pending(req.body)
-    
     newRequest.save((err, doc) => {
         if(err){
             return res.status(400).json({

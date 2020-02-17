@@ -17,4 +17,5 @@ export const CREATE_COACH_POST = "CREATE_COACH_POST";
 
 // Pending request status
 export const GET_ALL_REQUESTS = "GET_ALL_REQUESTS";
+export const SEND_REQUEST = "SEND_REQUEST";
 

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const pendingSchema = mongoose.Schema({
-    coach_name : {
+    coach_writer : {
         type: String
     }, 
     coach_profile_pic : {
