@@ -6,6 +6,8 @@ import {getAllRequest} from '../../Redux/actions/pending_actions'
 import {connect} from 'react-redux'
 import './navbar.css'
 
+import Notifications from './Notifications/Notifications'
+
 export class NavBar extends Component {
     constructor(props){
         super(props)
@@ -41,8 +43,7 @@ export class NavBar extends Component {
                     <img src={logo} alt='futbol training logo' onClick={() => this.toHomePage()} />
                 </div>
                 <div className='navbar_links'>
-                    <LoginSection />
-                    {accRole =='Admin' ? <div>Hello admin</div> : null}
+                    {accRole =='Admin' ? <LoginSection notification={<Notifications />} /> : <LoginSection />}
                 </div>
             </div>
         )
