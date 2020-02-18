@@ -32,7 +32,25 @@ router.get('/all-requests', (req, res) => {
 
 
 // Update approve_status depending if accepted or rejected
-// router.put('/approve_state', (req, res))
+router.put('/approve_state/:request_id', (req, res, next) => {
+    const param = req.params.request_id
+
+    Pending.findByIdAndUpdate(param, {$set : req.body }, (err, request) => {
+        if(err) {
+            return res.status(400).json({
+                message: "Could not update the approval field",
+                success: false,
+                error: err
+            })
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: 'successfully updated the approval status',
+            updated_request: request
+        })
+    })
+})
 
 
 

@@ -52,11 +52,11 @@ function RemoveAthleteModal(props) {
     return (
         <div>
             <button onClick={handleShow}>Remove Athlete</button>
-            <Modal show={show} onHide={handleClose}>
+            <Modal show={show} onHide={handleClose} scrollable={true}>
                 <Modal.Header>
                     <Modal.Title>Remove Athlete</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
+                <Modal.Body >
                     {athlete_select} 
                     <button onClick={() => handleSubmit() }>Submit</button>
                 </Modal.Body>

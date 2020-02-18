@@ -48,6 +48,9 @@ function LoginSection(props) {
                         <NavLink exact to='/coaches' className='navlink'>Coaches</NavLink>
                         <NavLink exact to='/coach-dashboard' className='navlink'>Dashboard</NavLink>
                 </div>
+                <div>
+                    {props.notification}
+                </div>
                 <div className='logout-button'>
                     <button onClick={logoutHandler}>Logout</button>
                 </div>
