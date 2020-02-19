@@ -72,10 +72,9 @@
     background: red;
 }
 
-
 .notification-modal-body {
     display: flex;
     align-items: center;
-    flex-direction: column;
+    flex-direction: column-reverse;
     justify-content: space-around;
 }

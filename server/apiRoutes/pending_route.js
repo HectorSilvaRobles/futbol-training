@@ -21,6 +21,7 @@ router.post('/send-request', (req, res ) => {
 })
 
 
+
 // Get all request in pending list
 router.get('/all-requests', (req, res) => {
     Pending.find()
@@ -31,25 +32,28 @@ router.get('/all-requests', (req, res) => {
 })
 
 
-// Update approve_status depending if accepted or rejected
-router.put('/approve_state/:request_id', (req, res, next) => {
+
+// Remove requests after the admin approves or rejects
+router.delete('/remove/:request_id', (req, res) => {
     const param = req.params.request_id
 
-    Pending.findByIdAndUpdate(param, {$set : req.body }, (err, request) => {
-        if(err) {
-            return res.status(400).json({
-                message: "Could not update the approval field",
-                success: false,
-                error: err
+    Pending.findById(param)
+    .then(request => request.remove()
+        .then(() => res.status(200).json({
+                success: true,
+                message: 'successfully removed request from pending list',
+                removedRequest: request
             })
-        }
-
-        return res.status(200).json({
-            success: true,
-            message: 'successfully updated the approval status',
-            updated_request: request
-        })
-    })
+        )
+        .catch(err => res.status(400).json({
+            success: false,
+            error: err,
+            message: 'failed to remove request from pending list'
+        }))
+    ).catch(err => res.status(400).json({
+        success: false,
+        error: err
+    }))
 })
 
 
