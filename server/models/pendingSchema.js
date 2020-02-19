@@ -12,9 +12,6 @@ const pendingSchema = mongoose.Schema({
     },
     typeOfEndpoint : {
         type: String
-    },
-    approve_status : {
-        type: String
     }
 })
 

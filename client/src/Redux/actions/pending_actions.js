@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {GET_ALL_REQUESTS, SEND_REQUEST} from './types'
+import {GET_ALL_REQUESTS, SEND_REQUEST, REMOVE_REQUEST} from './types'
 
 
 export function getAllRequest(){
@@ -18,8 +18,7 @@ export function sendRequest(dataToSubmit){
         coach_writer: dataToSubmit.coach_writer,
         coach_profile_pic : dataToSubmit.coach_profile_pic,
         dataToSubmit : dataToSubmit,
-        typeOfEndpoint : dataToSubmit.typeOfEndpoint,
-        approve_status: ''
+        typeOfEndpoint : dataToSubmit.typeOfEndpoint
     }
 
     const request = axios.post('/api/pending/send-request', sendRequestToSchema)
@@ -27,6 +26,20 @@ export function sendRequest(dataToSubmit){
 
     return {
         type: SEND_REQUEST,
+        payload: request
+    }
+}
+
+
+export function removeRequest(request_id){
+    let request = axios.delete(`/api/pending/remove/${request_id}`)
+    .then(res => res.data)
+    .catch(err => err)
+
+    console.log(request)
+
+    return {
+        type: REMOVE_REQUEST,
         payload: request
     }
 }
