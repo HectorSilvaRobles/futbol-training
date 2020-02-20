@@ -1,12 +1,14 @@
 import React, {useState} from 'react';
 import {Modal} from 'react-bootstrap';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import './notifications.css';
 
 import {createCoachPost} from '../../../Redux/actions/coach_to_athlete_actions'
 import {removeRequest, getAllRequest} from '../../../Redux/actions/pending_actions'
 
 function Notifications(props) {
+    const dispatch = useDispatch()
+
      // Modal handler for opening and closing modals
      const [show, setShow] = useState(false);
      const handleClose = () => setShow(false);
@@ -16,17 +18,23 @@ function Notifications(props) {
 
      // If pending request is accepted 
      const acceptedRequest = (dataToSubmit, request_id, type_of_endpoint) => {
-        console.log(dataToSubmit)
-        console.log(request_id)
-        console.log(type_of_endpoint)
+        if(type_of_endpoint == 'createCoachPost'){
+            dispatch(createCoachPost(dataToSubmit))
+            .then(res => {
+                if(res.payload.success){
+                    rejectedRequest(request_id)
+                }
+            })
+        }
      }
-
-     console.log(requests.all_pending_requests)
+     
 
      // If pending request is rejected
-     const rejectedRequest = (request_id, coach_name) => {
-        console.log(request_id, coach_name)
-        removeRequest(request_id)
+     const rejectedRequest = (request_id) => {
+        dispatch(removeRequest(request_id))
+        .then(res => {
+            dispatch(getAllRequest())
+        })
      }
      
      let all_requests;
@@ -41,7 +49,7 @@ function Notifications(props) {
                     </div>
                     <div className='notification-card-buttons'>
                         <button className='not-button-accept' onClick={() => acceptedRequest(val.dataToSubmit, val._id, val.typeOfEndpoint)}>Accept</button>
-                        <button className='not-button-reject' onClick={() => rejectedRequest(val._id, val.coach_writer)}>Reject</button>
+                        <button className='not-button-reject' onClick={() => rejectedRequest(val._id)}>Reject</button>
                     </div>
                  </div>
              )
