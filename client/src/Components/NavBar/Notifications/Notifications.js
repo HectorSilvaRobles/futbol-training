@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {Modal} from 'react-bootstrap';
 import {useSelector, useDispatch} from 'react-redux';
 import './notifications.css';
+import {Popover, OverlayTrigger} from 'react-bootstrap'
 import axios from 'axios'
 
 import {createCoachPost} from '../../../Redux/actions/coach_to_athlete_actions'
@@ -43,6 +44,7 @@ function Notifications(props) {
         })
      }
      
+
      
      let all_requests;
      if(requests){
@@ -58,12 +60,26 @@ function Notifications(props) {
          } 
          else {
             all_requests = all_pending_requests.map(val => {
-                // get the specific athlete
-                let selected_athletes = axios.get(`/api/athletes/get-this-athlete/${val.dataToSubmit.athlete_id}`)
-                .then(res => console.log(res.data))
+                // // get the specific athlete
+                // let athlete_id = val.dataToSubmit.athlete_id
+                // let thisAthlete = axios.get(`/api/athletes/get-this-athlete/${athlete_id}`)
+                // .then(response => response.data.specificAthlete)
+                
+                // console.log(thisAthlete)
 
-                console.log(selected_athletes)
+                console.log(val.dataToSubmit)
 
+                const popover = (
+                    <Popover>
+                        {val.typeOfEndpoint == 'createCoachPost' ? 
+                            <div>
+                                <Popover.Title>Coach Post</Popover.Title>
+                                <Popover.Content>{val.dataToSubmit.coach_message}</Popover.Content> 
+                            </div>
+                        : null}
+                    </Popover>
+                )
+                
                 return (
                     <div key={val._id} className='notification-card'>
                         <div className='notification-card-header'>
@@ -75,8 +91,12 @@ function Notifications(props) {
                                 {val.typeOfEndpoint == 'createCoachPost' ? <h1>Coach Post</h1> : null}
                             </div>
                             <div className='n-c-i-body'>
-                                {/* <h1>{val.dataToSubmit.athlete_id}</h1> */}
-                                {/* <h1>{selected_athletes.lastname}</h1> */}
+                                {val.typeOfEndpoint === 'createCoachPost' ? 
+                                <OverlayTrigger trigger='click' placement='bottom' overlay={popover}>
+                                    <button>View Request</button>
+                                </OverlayTrigger> 
+                                : null}
+                                
                             </div>
                         </div>
                         <div className='notification-card-buttons'>
