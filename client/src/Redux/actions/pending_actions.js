@@ -36,8 +36,6 @@ export function removeRequest(request_id){
     .then(res => res.data)
     .catch(err => err)
 
-    console.log(request)
-
     return {
         type: REMOVE_REQUEST,
         payload: request

@@ -7,7 +7,6 @@ export default function(state = {}, action) {
         case GET_ALL_REQUESTS:
             return {...state, all_request: action.payload}
         case REMOVE_REQUEST: 
-            console.log('hit')
             return {...state, removed_request: action.payload}
         default: 
             return state;
