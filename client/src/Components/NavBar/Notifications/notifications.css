@@ -57,6 +57,11 @@
     border-left: solid 1px grey
 }
 
+.notification-card-info {
+    background: red;
+    width: 50%;
+}
+
 .notification-card-buttons > button {
     width: 70%;
     margin: 10px 0;
