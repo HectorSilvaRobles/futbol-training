@@ -54,6 +54,23 @@ router.get('/all-athletes', (req, res) => {
 })
 
 
+// get a specific player from Athlete schema in database
+router.get('/get-this-athlete/:athlete_id', (req, res) => {
+    const param = req.params.athlete_id
+
+    Athletes.findById(param)
+    .then(athlete => res.status(200).json({
+        success: true,
+        specificAthlete: athlete
+    }))
+    .catch(err => res.status(400).json({
+        success: false,
+        message: 'could not get specific athlete'
+    }))
+    
+})
+
+
 // Update athlete details in database, endpoint
 router.put('/update-athlete/:athlete_id', (req, res, next) => {
     var param = req.params.athlete_id
