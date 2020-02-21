@@ -20,6 +20,7 @@ function Notifications(props) {
 
      // Get data from redux state
      let requests = useSelector(state => state.pending_reducer.all_request);
+     let athletes = useSelector(state => state.athletes_reducer.athletes)
 
 
      // If pending request is accepted 
@@ -44,11 +45,10 @@ function Notifications(props) {
         })
      }
      
-
      
      let all_requests;
      if(requests){
-         const {all_pending_requests} = requests 
+        const {all_pending_requests} = requests 
 
          // If there is no more pending requests then return this message
          if(all_pending_requests.length == 0){
@@ -59,21 +59,30 @@ function Notifications(props) {
              )
          } 
          else {
+            let selected_athlete;
+            const {all_Athletes} = athletes
+
+            // loop through the array of pending requests and create requests cards
             all_requests = all_pending_requests.map(val => {
-                // // get the specific athlete
-                // let athlete_id = val.dataToSubmit.athlete_id
-                // let thisAthlete = axios.get(`/api/athletes/get-this-athlete/${athlete_id}`)
-                // .then(response => response.data.specificAthlete)
-                
-                // console.log(thisAthlete)
 
-                console.log(val.dataToSubmit)
+                // get the specific athlete
+                let athlete_id = val.dataToSubmit.athlete_id
+                if(all_Athletes) {
+                    for(let i =0; i < all_Athletes.length; i++){
+                        const {_id} = all_Athletes[i]
+                        if(_id == athlete_id){
+                            selected_athlete = all_Athletes[i]
+                        }
+                    }
+                }
+                const {firstname, lastname} = selected_athlete
 
+
+                // Popover component to show the content of the request
                 const popover = (
                     <Popover>
                         {val.typeOfEndpoint == 'createCoachPost' ? 
                             <div>
-                                <Popover.Title>Coach Post</Popover.Title>
                                 <Popover.Content>{val.dataToSubmit.coach_message}</Popover.Content> 
                             </div>
                         : null}
@@ -92,9 +101,12 @@ function Notifications(props) {
                             </div>
                             <div className='n-c-i-body'>
                                 {val.typeOfEndpoint === 'createCoachPost' ? 
-                                <OverlayTrigger trigger='click' placement='bottom' overlay={popover}>
-                                    <button>View Request</button>
-                                </OverlayTrigger> 
+                                <div>
+                                    <h1>{firstname[0] + '. ' + lastname}</h1>
+                                    <OverlayTrigger trigger='click' placement='bottom' overlay={popover}>
+                                        <button>View Request</button>
+                                    </OverlayTrigger> 
+                                </div>
                                 : null}
                                 
                             </div>
