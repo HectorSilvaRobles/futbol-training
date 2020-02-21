@@ -20,6 +20,24 @@ const coachPostsSchema = mongoose.Schema({
     }
 })
 
+const performanceLog = mongoose.Schema({
+    coach_writer: {
+        type: String
+    },
+    date_of_post : {
+        type: String
+    },
+    leadership_level : {
+        type: Number
+    },
+    focus_level : {
+        type: Number
+    },
+    energy_level: {
+        type: Number
+    }
+})
+
 const athleteSchema = mongoose.Schema({
     athlete_pic: {
         type: String
@@ -38,7 +56,8 @@ const athleteSchema = mongoose.Schema({
     age: {
         type: Number
     }, 
-    coach_posts: [coachPostsSchema]
+    coach_posts: [coachPostsSchema],
+    performance_logs : [performanceLog]
 })
 
 const Athletes = mongoose.model('Athlete', athleteSchema)

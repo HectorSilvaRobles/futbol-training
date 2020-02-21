@@ -44,4 +44,26 @@ router.delete('/remove-coach-post/:athlete_id', (req, res) => {
 })
 
 
+
+// create a performance log for specific athlete
+router.put('/performance-log/:athlete_id', (req, res) => {
+    const param = req.params.athlete_id
+
+    Athletes.findByIdAndUpdate(param, {$push : req.body}, (err , updatedAthlete) => {
+        if(err){
+            return res.status(400).json({
+                success: false,
+                error: err,
+                message: 'could not make a new performance log for athlete'
+            })
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: 'successfully created performance log for athlete',
+            updatedAthlete: updatedAthlete
+        })
+    })
+})
+
 module.exports = router
