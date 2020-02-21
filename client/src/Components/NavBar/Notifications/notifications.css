@@ -79,9 +79,12 @@
 }
 
 .n-c-i-body {
-    background: green;
+    
     height: 50%;
     width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .notification-card-buttons > button {
