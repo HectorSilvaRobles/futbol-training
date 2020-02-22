@@ -1,6 +1,7 @@
 import React from 'react'
 import ManageAthletes from './ManageAthletes/ManageAthletes'
 import CoachPosts from './CoachPosts/CoachPosts'
+import PerformanceLogs from './PerformanceLogs/PerformanceLogs'
 import {useSelector} from 'react-redux'
 
 import AccordionComp from '../Accordion/Accordion'
@@ -26,7 +27,7 @@ function CoachDashboard (props){
                 coachPostContent={<CoachPosts />}
 
                 performanceTitle='Log Performance'
-                performanceContent='log performances here'
+                performanceContent={<PerformanceLogs />}
 
                 highlightsTitle='Upload Highlights'
                 highlightsContent='highlight content goes here'
