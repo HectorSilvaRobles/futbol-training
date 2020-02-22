@@ -132,6 +132,7 @@ export class CoachPosts extends Component {
                     <button onClick={() => this.handleSubmit()} className='create-post-button'>Create Post</button>
                 </div>
             :
+            /// Spinner needs to be here ///
             <div>Loading</div> 
             }
             </div>

@@ -1,0 +1,30 @@
+.performance-log-admin {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.performance-log-rating {
+    background: green;
+    height: 60vh;
+    width: 85%;
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.rating-card {
+    background: red;
+    width: 80%;
+    height: 28%;
+}
+
+.rating-star {
+    cursor: pointer;
+    margin: 0 20px;
+}
+.star-radio {
+    display: none;
+}
