@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux';
 import './performance.css'
-import {FaStar} from 'react-icons/fa'
+import Rating from './Ratings/Ratings'
 
 import AthleteSelect from '../AthleteSelect/AthleteSelect'
 
@@ -29,48 +29,20 @@ class PerformanceLogs extends Component {
     }
 
 
+
     render(){
         const {userData} = this.props.coach_user
 
-        const starRating = (
-            <div>
-                {[...Array(5)].map((star, i) => {
-                    const ratingValue = i + 1
-
-                    return (
-                        <label>
-                            <input 
-                                type='radio' 
-                                value={ratingValue} 
-                                onClick={() => this.setState({energy_rating: ratingValue})}
-                                
-                                className='star-radio' 
-                            />
-                            <FaStar 
-                                className='rating-star' 
-                                color={ratingValue <= (this.state.energy_rating_hover || this.state.energy_rating) ? 'yellow' : "grey"} 
-                                size={80} 
-                                onMouseEnter={() => this.setState({energy_rating_hover: ratingValue})}
-                                onMouseLeave={() => this.setState({energy_rating_hover: null})}
-                            />
-                        </label>
-                    )
-                })}
-            </div>
-        )
-        console.log(this.state)
-        
-        
         return (
             <div>
                 {userData ? 
                     <div className='performance-log-admin'>
                         <div className='performance-log-rating'>
                             <div className='rating-card'>
-                                {starRating}
+                                {<Rating />}
                             </div>
                             <div className='rating-card'>
-
+                                {<Rating />}
                             </div>
                             <div className='rating-card'>
 
