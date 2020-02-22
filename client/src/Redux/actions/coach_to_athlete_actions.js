@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {CREATE_COACH_POST} from './types'
+import {CREATE_COACH_POST, CREATE_PERFORMANCE_LOG} from './types'
 
 export function createCoachPost(dataToSubmit){
     const {athlete_id, coach_writer, coach_profile_pic, coach_message, type_of_post} = dataToSubmit
@@ -19,5 +19,15 @@ export function createCoachPost(dataToSubmit){
     return {
         type: CREATE_COACH_POST,
         payload: request
+    }
+}
+
+
+export function createPerformanceLog(dataToSubmit){
+    const {} = dataToSubmit
+    console.log(dataToSubmit)
+    return {
+        type: CREATE_PERFORMANCE_LOG,
+        payload: dataToSubmit
     }
 }

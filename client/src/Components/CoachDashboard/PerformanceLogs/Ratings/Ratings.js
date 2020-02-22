@@ -25,6 +25,7 @@ export default function Ratings(props) {
                                 <FaStar 
                                     className='rating-star' 
                                     color={ratingValue <= (hover || rating) ? '#C13540' : "black"} 
+                                    
                                     size={60} 
                                     onMouseEnter={() => setHover(ratingValue)}
                                     onMouseLeave={() => setHover(null)}

@@ -2,7 +2,8 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux';
 import './performance.css'
 import Rating from './Ratings/Ratings'
-
+import {createPerformanceLog} from '../../../Redux/actions/coach_to_athlete_actions'
+ 
 import AthleteSelect from '../AthleteSelect/AthleteSelect'
 
 class PerformanceLogs extends Component {
@@ -44,6 +45,21 @@ class PerformanceLogs extends Component {
     }
 
 
+    handleSubmit = () => {
+        const {createPerformanceLog} = this.props
+        const {energy_rating, focus_rating, leadership_rating, selectedAthletes} = this.state
+
+        if(!energy_rating || !focus_rating || !leadership_rating || selectedAthletes.length < 1){
+            console.log('error')
+        }
+        else {
+            console.log('hi')
+            createPerformanceLog(this.state)
+        }
+        
+        
+        
+    }
 
     render(){
         const {userData} = this.props.coach_user
@@ -67,6 +83,7 @@ class PerformanceLogs extends Component {
                             </div>
                         </div>
                         <AthleteSelect callBack={this.callBackSelectedAthletes} />
+                        <button onClick={() => this.handleSubmit()}>Save Log</button>
                     </div> 
                     : 
                     <div>Loading</div>
@@ -80,7 +97,11 @@ const mapPropsToState = (reduxstate) => {
     return reduxstate
 }
 
+const reduxActions = {
+    createPerformanceLog
+}
 
-const myconnect = connect(mapPropsToState)
+
+const myconnect = connect(mapPropsToState, reduxActions)
 
 export default myconnect(PerformanceLogs)
