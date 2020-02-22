@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import {FaStar} from 'react-icons/fa'
 
-export default function Ratings() {
+export default function Ratings(props) {
     const [rating, setRating] = useState(null);
     const [hover, setHover] = useState(null)
 
@@ -16,13 +16,16 @@ export default function Ratings() {
                                 <input 
                                     type='radio' 
                                     value={ratingValue} 
-                                    onClick={() => setRating(ratingValue)}
+                                    onClick={() => {
+                                        setRating(ratingValue)
+                                        props.rating(ratingValue, props.type)
+                                    }}
                                     className='star-radio' 
                                 />
                                 <FaStar 
                                     className='rating-star' 
-                                    color={ratingValue <= (hover || rating) ? 'yellow' : "grey"} 
-                                    size={80} 
+                                    color={ratingValue <= (hover || rating) ? '#C13540' : "black"} 
+                                    size={60} 
                                     onMouseEnter={() => setHover(ratingValue)}
                                     onMouseLeave={() => setHover(null)}
                                 />
@@ -32,6 +35,8 @@ export default function Ratings() {
             }
         </div>
     )
+
+
     return (
         <div>
             {starRating}

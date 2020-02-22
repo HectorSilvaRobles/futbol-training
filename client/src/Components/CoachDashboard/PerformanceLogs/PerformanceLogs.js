@@ -12,7 +12,9 @@ class PerformanceLogs extends Component {
         this.state = {
             selectedAthletes : [],
             energy_rating: null,
-            energy_rating_hover: null
+            focus_rating: null,
+            leadership_rating: null,
+
         }
     }
 
@@ -28,24 +30,40 @@ class PerformanceLogs extends Component {
         }  
     }
 
+    // get the rating for each specific type and set state
+    callBackRating = (rating, type) => {
+        if(type == 'energy') {
+            this.setState({energy_rating : rating})
+        }
+        else if( type == 'focus') {
+            this.setState({focus_rating: rating})
+        }
+        else if( type == 'leadership') {
+            this.setState({leadership_rating: rating})
+        }
+    }
+
 
 
     render(){
         const {userData} = this.props.coach_user
-
+        
         return (
             <div>
                 {userData ? 
                     <div className='performance-log-admin'>
                         <div className='performance-log-rating'>
                             <div className='rating-card'>
-                                {<Rating />}
+                                <h1>Energy</h1>
+                                {<Rating rating={this.callBackRating} type='energy'/>}
                             </div>
                             <div className='rating-card'>
-                                {<Rating />}
+                                <h1>Focus</h1>
+                                {<Rating rating={this.callBackRating} type='focus' />}
                             </div>
                             <div className='rating-card'>
-
+                                <h1>Leadership</h1>
+                                {<Rating rating={this.callBackRating} type='leadership' />}
                             </div>
                         </div>
                         <AthleteSelect callBack={this.callBackSelectedAthletes} />

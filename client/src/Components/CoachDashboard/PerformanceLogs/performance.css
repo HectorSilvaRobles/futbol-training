@@ -5,7 +5,7 @@
 }
 
 .performance-log-rating {
-    background: green;
+    /* background: green; */
     height: 60vh;
     width: 85%;
     margin: 20px 0;
@@ -16,9 +16,18 @@
 }
 
 .rating-card {
-    background: red;
+    background: white;
+    border: solid #D9D5D5 2px;
     width: 80%;
     height: 28%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.rating-card > h1 {
+    font-weight: bold;
+    font-size: 30px;
 }
 
 .rating-star {
