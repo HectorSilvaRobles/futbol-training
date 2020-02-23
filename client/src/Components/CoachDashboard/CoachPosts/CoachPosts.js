@@ -54,7 +54,7 @@ export class CoachPosts extends Component {
                     .then(res => {
                         if(res.payload.success){
                             this.setState({postSuccess: true})
-                            alert('You post was successfully created. Now waiting for approval.')
+                            alert('Your post was successfully created. Now waiting for approval.')
                         }
                         this.props.getAllRequest()
 

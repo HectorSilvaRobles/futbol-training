@@ -27,13 +27,13 @@ const performanceLog = mongoose.Schema({
     date_of_post : {
         type: String
     },
-    leadership_level : {
+    leadership_rating : {
         type: Number
     },
-    focus_level : {
+    focus_rating : {
         type: Number
     },
-    energy_level: {
+    energy_rating: {
         type: Number
     }
 })
