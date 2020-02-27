@@ -37,4 +37,15 @@
 .star-radio {
     display: none;
 }
+
+.rating-button {
+    background: #C13540;
+    color: white;
+    border: none;
+    margin: 20px 0;
+    height: 7vh;
+    width: 85%;
+    font-size : 25px;
+    font-weight: bold;
+}
  

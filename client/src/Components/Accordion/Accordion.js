@@ -21,6 +21,7 @@ function AccordionComp(props){
                         <div className='accordion-card-body'>{props.performanceContent}</div>
                     </Accordion.Collapse>
                 </Card>
+                {props.adminShow ? 
                 <Card className='accordion-card'>
                     <Accordion.Toggle className='accordion-card-header' eventKey="2">
                         {props.highlightsTitle}
@@ -28,7 +29,7 @@ function AccordionComp(props){
                     <Accordion.Collapse eventKey="2">
                         <div className='accordion-card-body'>{props.highlightsContent}</div>
                     </Accordion.Collapse>
-                </Card>
+                </Card> : null }
                 {props.adminShow ? 
                 <Card className='accordion-card'>
                     <Accordion.Toggle className='accordion-card-header' eventKey="3">
