@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import './App.css';
 import {Route, Switch} from 'react-router-dom'
 import Auth from './Hoc/auth'
-
+import {toast} from 'react-toastify'
 
 import HomePage from './Components/Homepage/HomePage'
 import RegisterPage from './Components/RegisterPage/RegisterPage'
@@ -18,6 +18,8 @@ import {getAllAthletes} from './Redux/actions/athlete_actions'
 import {getAllRequest} from './Redux/actions/pending_actions'
 import {useDispatch, useSelector} from 'react-redux'
 
+
+toast.configure()
 
 function App(props) {
   // getting all athletes
