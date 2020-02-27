@@ -16,7 +16,8 @@ class PerformanceLogs extends Component {
             energy_rating: null,
             focus_rating: null,
             leadership_rating: null,
-            postSuccess: false
+            postSuccess: false,
+            ratingReset: false
         }
     }
 
@@ -44,6 +45,7 @@ class PerformanceLogs extends Component {
         else if( type == 'leadership') {
             this.setState({leadership_rating: rating})
         }
+
     }
 
 
@@ -51,8 +53,7 @@ class PerformanceLogs extends Component {
         const {createPerformanceLog} = this.props
         const {lastname, accountRole, profile_pic} = this.props.coach_user.userData
         const {energy_rating, focus_rating, leadership_rating, selectedAthletes} = this.state
-
-
+        
         // Check to see if any of the inputs are empty if so let them know they have to fill it out
         if(!energy_rating || !focus_rating || !leadership_rating || selectedAthletes.length < 1){
             console.log('error')
@@ -107,7 +108,8 @@ class PerformanceLogs extends Component {
                 focus_rating: null,
                 leadership_rating: null,
                 energy_rating: null,
-                postSuccess: false
+                postSuccess: false,
+                ratingReset: true
             })
         }, 500)
     }
@@ -123,19 +125,19 @@ class PerformanceLogs extends Component {
                         <div className='performance-log-rating'>
                             <div className='rating-card'>
                                 <h1>Energy</h1>
-                                {<Rating rating={this.callBackRating} type='energy'/>}
+                                {<Rating rating={this.callBackRating} ratingreset={this.state.ratingReset ? true : null} type='energy'/>}
                             </div>
                             <div className='rating-card'>
                                 <h1>Focus</h1>
-                                {<Rating rating={this.callBackRating} type='focus' />}
+                                {<Rating rating={this.callBackRating} ratingreset={this.state.ratingReset ? true : null} type='focus' />}
                             </div>
                             <div className='rating-card'>
                                 <h1>Leadership</h1>
-                                {<Rating rating={this.callBackRating} type='leadership' />}
+                                {<Rating rating={this.callBackRating} ratingreset={this.state.ratingReset ? true : null} type='leadership' />}
                             </div>
                         </div>
                         <AthleteSelect callBack={this.callBackSelectedAthletes} />
-                        <button onClick={() => this.handleSubmit()}>Save Log</button>
+                        <button onClick={() => this.handleSubmit()} className='rating-button'>Save Log</button>
                     </div> 
                     : 
                     <div>Loading</div>

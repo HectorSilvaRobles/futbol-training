@@ -3,9 +3,8 @@ import {Modal} from 'react-bootstrap';
 import {useSelector, useDispatch} from 'react-redux';
 import './notifications.css';
 import {Popover, OverlayTrigger} from 'react-bootstrap'
-import axios from 'axios'
 
-import {createCoachPost} from '../../../Redux/actions/coach_to_athlete_actions'
+import {createCoachPost, createPerformanceLog} from '../../../Redux/actions/coach_to_athlete_actions'
 import {removeRequest, getAllRequest} from '../../../Redux/actions/pending_actions'
 
 
@@ -28,6 +27,16 @@ function Notifications(props) {
          // If type of endpoint is createCoachPost then run this
         if(type_of_endpoint == 'createCoachPost'){
             dispatch(createCoachPost(dataToSubmit))
+            .then(res => {
+                if(res.payload.success){
+                    rejectedRequest(request_id)
+                }
+            })
+        }
+
+        // If type of endpoint is createPerformanceLog then run this
+        if(type_of_endpoint == 'createPerformanceLog'){
+            dispatch(createPerformanceLog(dataToSubmit))
             .then(res => {
                 if(res.payload.success){
                     rejectedRequest(request_id)
@@ -64,7 +73,7 @@ function Notifications(props) {
 
             // loop through the array of pending requests and create requests cards
             all_requests = all_pending_requests.map(val => {
-
+                console.log(val)
                 // get the specific athlete
                 let athlete_id = val.dataToSubmit.athlete_id
                 if(all_Athletes) {
@@ -86,6 +95,12 @@ function Notifications(props) {
                                 <Popover.Content>{val.dataToSubmit.coach_message}</Popover.Content> 
                             </div>
                         : null}
+
+                        {val.typeOfEndpoint  == 'createPerformanceLog' ? 
+                        <div>
+                            <Popover.Content>{val.dataToSubmit.energy_rating}</Popover.Content>
+                        </div>
+                        : null}
                     </Popover>
                 )
                 
@@ -98,15 +113,26 @@ function Notifications(props) {
                         <div className='notification-card-info'>
                             <div className='n-c-i-header'>
                                 {val.typeOfEndpoint == 'createCoachPost' ? <h1>Coach Post</h1> : null}
+                                {val.typeOfEndpoint == 'createPerformanceLog' ? <h1>Performance Log</h1> : null}
+
                             </div>
                             <div className='n-c-i-body'>
+                                <h1>{firstname[0] + '. ' + lastname}</h1>
+
                                 {val.typeOfEndpoint === 'createCoachPost' ? 
                                 <div>
-                                    <h1>{firstname[0] + '. ' + lastname}</h1>
                                     <OverlayTrigger trigger='click' placement='bottom' overlay={popover}>
                                         <button>View Request</button>
                                     </OverlayTrigger> 
                                 </div>
+                                : null}
+
+                                {val.typeOfEndpoint == 'createPerformanceLog' ? 
+                                <div>
+                                    <OverlayTrigger trigger='click' placement='bottom' overlay={popover}>
+                                        <button>View Request</button>
+                                    </OverlayTrigger> 
+                                </div> 
                                 : null}
                                 
                             </div>

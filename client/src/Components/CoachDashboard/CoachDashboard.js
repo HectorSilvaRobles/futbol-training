@@ -2,6 +2,7 @@ import React from 'react'
 import ManageAthletes from './ManageAthletes/ManageAthletes'
 import CoachPosts from './CoachPosts/CoachPosts'
 import PerformanceLogs from './PerformanceLogs/PerformanceLogs'
+import HighlightUpload from './HighlightUpload/HighlightUpload'
 import {useSelector} from 'react-redux'
 
 import AccordionComp from '../Accordion/Accordion'
@@ -21,7 +22,6 @@ function CoachDashboard (props){
 
     return (
         <div className='coach-dashboard'>
-            admin coach
             <AccordionComp 
                 coachPostTitle='Coach Post' 
                 coachPostContent={<CoachPosts />}
@@ -29,8 +29,9 @@ function CoachDashboard (props){
                 performanceTitle='Log Performance'
                 performanceContent={<PerformanceLogs />}
 
+                adminShow={show}
                 highlightsTitle='Upload Highlights'
-                highlightsContent='highlight content goes here'
+                highlightsContent={<HighlightUpload />}
 
                 adminShow={show}
                 manageAthleteTitle='Manage Athletes'

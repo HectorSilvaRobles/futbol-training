@@ -9,6 +9,7 @@ const theDay = newDate.getDate()
 const theYear = newDate.getFullYear()
 const theDate = `${theMonth} ${theDay}, ${theYear}`
 
+
 export function createCoachPost(dataToSubmit){
     const {athlete_id, coach_writer, coach_profile_pic, coach_message, type_of_post} = dataToSubmit
     let newData = {
