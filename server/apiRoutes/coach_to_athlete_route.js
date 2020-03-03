@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const {Athletes} = require('../models/athleteSchema')
-
+var ffmpeg = require('fluent-ffmpeg');
+const genThumbnail = require('simple-thumbnail')
 
 // Create a new coach post 
 router.put('/coach-post/:athlete_id', (req, res, next) => {
@@ -65,6 +66,50 @@ router.put('/performance-log/:athlete_id', (req, res) => {
             updatedAthlete: updatedAthlete
         })
     })
+})
+
+
+router.post('/get-thumbnail', (req, res) => {
+
+    // genThumbnail(req.body.video, 'thumbnails/pi.png', '500x500')
+    // .then(() => res.status(200).json({
+    //     success: true,
+    //     path: 'thumbnails/pi.png'
+    // }))
+    // .catch(err => console.log(err))
+
+
+})
+
+router.put('/upload-highlight/:athleted_id', (req, res) => {
+
+    
+
+    // ffmpeg.ffprobe(req.body.video, function(err, videoInfo){
+    //     const {duration} = videoInfo.format;
+    
+    //     if(duration){
+    //         const frameintervalInSeconds = Math.floor(duration / 1)
+
+    //         return ffmpeg()
+    //         .input(req.body.video)
+    //         .outputOptions([`-vf fps=1/${frameintervalInSeconds}`])
+    //         .output('thumb%04d.jpg')
+    //         .on('end', function(){
+    //             res.status(200).json({
+    //                 success: true,
+    //             })
+    //          })
+    //          .on('error', function(){
+    //              res.status(400).json({
+    //                  success: false,
+    //              })
+    //          })
+    //         .run()
+
+    //     }
+       
+    // }) 
 })
 
 module.exports = router

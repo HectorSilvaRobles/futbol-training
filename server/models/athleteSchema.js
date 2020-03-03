@@ -20,6 +20,22 @@ const coachPostsSchema = mongoose.Schema({
     }
 })
 
+
+const highlightSchema = mongoose.Schema({
+    coach_writer: {
+        type: String
+    },
+    video_link : {
+        type: String
+    },
+    video_thumbnail : {
+        type: String
+    },
+    date_of_post : {
+        type: String
+    }
+})
+
 const performanceLog = mongoose.Schema({
     coach_writer: {
         type: String
@@ -57,7 +73,8 @@ const athleteSchema = mongoose.Schema({
         type: Number
     }, 
     coach_posts: [coachPostsSchema],
-    performance_logs : [performanceLog]
+    performance_logs : [performanceLog],
+    highlights: [highlightSchema]
 })
 
 const Athletes = mongoose.model('Athlete', athleteSchema)
