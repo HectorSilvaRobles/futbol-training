@@ -3,7 +3,7 @@ import {CREATE_COACH_POST, CREATE_PERFORMANCE_LOG} from './types'
 
 
 var newDate = new Date()
-var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+var months = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
 const theMonth = months[newDate.getMonth()]
 const theDay = newDate.getDate()
 const theYear = newDate.getFullYear()
@@ -17,7 +17,8 @@ export function createCoachPost(dataToSubmit){
             coach_writer,
             coach_profile_pic,
             coach_message,
-            type_of_post
+            type_of_post,
+            "date_of_post" : theDate
         }
     }
 

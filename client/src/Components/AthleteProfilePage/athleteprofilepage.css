@@ -58,7 +58,7 @@
     align-items: center;
     border: solid 3px #D9D5D5;
     border-radius: 20px;
-    box-shadow: 2px 5px 10px grey;
+    box-shadow: 1px 2px 5px grey;
 }
 
 
@@ -68,7 +68,7 @@
     height: 15vh;
     border-radius: 20px;
     border: solid 3px #D9D5D5;
-    box-shadow: 1px 5px 10px grey;
+    box-shadow: 1px 2px 5px grey;
     margin: 50px 0;
     display: flex;
     align-items: center;
@@ -97,9 +97,90 @@
 /* Profile content area */
 .profile-content-area {
     background: #F7F7F7;
-    height: 20vh;
     border-radius: 20px;
     border: solid 3px #D9D5D5;
-    box-shadow: 1px 5px 10px grey;
+    box-shadow: 1px 2px 5px grey;
+    width: 100%;
+    padding: 50px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: column;
+}
 
+
+/* Coach posts cards */
+.coach_posts_card {
+    background: white;
+    border: 1px solid black;
+    width: 75%;
+    height: 20vh;
+    margin: 50px 0;
+    border-radius: 10px;
+    display: flex;
+}
+.coach_posts_card_header {
+    background: black;
+    height: 100%;
+    width: 30%;
+    border-radius: 10px 0 0 10px;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.coach_posts_card_header > img {
+    height: 110px;
+    width: 110px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: solid 5px #C13540;
+}
+.coach_posts_card_header > h1 {
+    font-size: 25px;
+    color: white;
+    margin-top: 5px;
+}
+
+.coach_posts_card_content {
+    height: 100%;
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.cpcc_upper {
+    /* background: blue; */
+    width: 100%;
+    height: 30%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+.cpcc_upper > h1 {
+    font-size: 30px;
+    text-transform: capitalize;
+    margin-left: 30px;
+    font-weight: bold;
+    padding: 0;
+    color: #C13540;
+}
+.cpcc_upper > h2 {
+    font-size: 20px;
+    color: black;
+    margin-right: 30px;
+}
+
+.cpcc_lower {
+    /* background: green; */
+    height: 45%;
+    width: 100%;
+    display: flex;
+    margin-top: 10px;
+
+}
+.cpcc_lower > p {
+    margin-left: 30px;
+    font-size: 20px;
 }
