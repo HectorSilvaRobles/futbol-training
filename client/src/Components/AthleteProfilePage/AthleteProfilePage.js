@@ -9,7 +9,7 @@ export class AthleteProfilePage extends Component {
 
         this.state = {
             athlete: null,
-            coach_posts: false,
+            coach_posts: true,
             performance_logs: false,
             highlights: false
         }
@@ -29,6 +29,40 @@ export class AthleteProfilePage extends Component {
             })
         })
     }
+
+
+    // Coach posts
+    coachPosts = () => {
+        const {athlete} = this.state
+
+        if(athlete){
+            const {coach_posts} = athlete
+            const coach_posts_cards = coach_posts.map((val) => {
+                const {coach_writer, coach_profile_pic, coach_message, type_of_post, date_of_post} = val
+                return (
+                    <div className='coach_posts_card' key={val._id}>
+                        <div className='coach_posts_card_header'>
+                            <img src={coach_profile_pic} />
+                            <h1>Coach {coach_writer}</h1>
+                        </div>
+                        <div className='coach_posts_card_content'>
+                            <div className='cpcc_upper'>
+                                <h1>{type_of_post}</h1>
+                                <h2>{date_of_post}</h2>
+                            </div>
+                            <div className='cpcc_lower'>
+                                <p>{coach_message}</p>
+                            </div>
+                        </div>
+                    </div>
+                )
+            })
+
+            return coach_posts_cards;
+        }
+
+    }
+
 
     handleDisplayAthlete =() => {
         const {athlete} = this.state
@@ -51,7 +85,7 @@ export class AthleteProfilePage extends Component {
                 </div>
 
                 <div className='profile-content-area'>
-                    {this.state.coach_posts ? <div>Coach posts</div> : null}
+                    {this.state.coach_posts ? this.coachPosts() : null}
                     {this.state.performance_logs ? <div>Performance</div> : null}
                     {this.state.highlights ? <div>Highlights</div> : null}
 
@@ -61,7 +95,6 @@ export class AthleteProfilePage extends Component {
     }
 
     render() {
-        console.log(this.state)
         const {athlete} = this.state
         return (
             <div className='athlete-profile-main'>
