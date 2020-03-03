@@ -6,6 +6,10 @@ import {ProgressBar} from 'react-bootstrap';
 import {toast} from 'react-toastify';
 import {useSelector} from 'react-redux';
 import 'react-toastify/dist/ReactToastify.css'
+import axios from 'axios'
+
+
+import ReactPlayer from 'react-player'
 
 import AthleteSelect from '../AthleteSelect/AthleteSelect'
 
@@ -16,6 +20,7 @@ function HighlightUpload(props){
     // video upload states
     const [error, setError] = useState(false)
     const [url, setUrl] = useState(null)
+    const [thumbnail, setTumbnail] = useState(null)
     const [progress, setProgress]= useState(0)
    
 
@@ -41,13 +46,13 @@ function HighlightUpload(props){
     // For uploading the video 
     const handleUploadChange = (event) => {
         const file = event.target.files[0]
-
+        console.log(file)
         if(file){
             const filetype = file['type'];
             const validVideoFile = ['video/mp4']
 
             if(validVideoFile.includes(filetype)){
-                const uploadVideo = storage.ref(`highlights/videos/${file.name}`).put(file)
+                const uploadVideo = storage.ref(`highlights/videos/highlight-${file.lastModified}`).put(file)
 
                 uploadVideo.on(
                     'state_changed', 
@@ -79,13 +84,25 @@ function HighlightUpload(props){
         } else if(selectedAthletes.length == 0){
             toast.error('Please select an athlete')
         }
-        console.log(url)
+        
+        selectedAthletes.map(val => {
+            console.log(val)
+        })
     }
 
-    console.log(coach_user)
+    console.log(url)
+    const getThumbnail = () => {
+        axios.post('/api/coach_to_athlete/get-thumbnail', {video: url})
+        .then(res => console.log(res.data))
+    }
+
+    if(url){
+        getThumbnail()
+    }
 
     return (
         <div className='highlight-upload'>
+           {url ?  <ReactPlayer url={url} controls={true}   /> : null } 
              <div className='upload-video'>
                 <div className='upload-video-square' onClick={() => squareAsInput()} >
                     <FaPlus size={90} color={'#707070'}/>

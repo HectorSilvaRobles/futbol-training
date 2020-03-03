@@ -9,7 +9,9 @@ export class AthleteProfilePage extends Component {
 
         this.state = {
             athlete: null,
-            
+            coach_posts: false,
+            performance_logs: false,
+            highlights: false
         }
     }
 
@@ -43,6 +45,15 @@ export class AthleteProfilePage extends Component {
                     </div>
                 </div>
                 <div className='profile-options'>
+                    <button className={this.state.coach_posts ? 'profile-options-button-active':'profile-options-button'} onClick={() => this.setState({coach_posts: true, performance_logs: false, highlights: false})}>Newsfeed</button>
+                    <button className={this.state.performance_logs ? 'profile-options-button-active':'profile-options-button'} onClick={() => this.setState({performance_logs: true, coach_posts: false, highlights: false})}>Perfromance</button>
+                    <button className={this.state.highlights ? 'profile-options-button-active':'profile-options-button'} onClick={() => this.setState({highlights: true, performance_logs: false, coach_posts: false})}>Highlights</button>
+                </div>
+
+                <div className='profile-content-area'>
+                    {this.state.coach_posts ? <div>Coach posts</div> : null}
+                    {this.state.performance_logs ? <div>Performance</div> : null}
+                    {this.state.highlights ? <div>Highlights</div> : null}
 
                 </div>
             </div>
@@ -50,6 +61,7 @@ export class AthleteProfilePage extends Component {
     }
 
     render() {
+        console.log(this.state)
         const {athlete} = this.state
         return (
             <div className='athlete-profile-main'>

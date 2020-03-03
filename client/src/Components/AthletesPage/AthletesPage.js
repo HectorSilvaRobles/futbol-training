@@ -32,7 +32,6 @@ function AthletesPage(props) {
         alert('loading')
     }
 
-    console.log(athlete, redirect)
     return (
         <div className='athlete-page'>
             Athletes Page
