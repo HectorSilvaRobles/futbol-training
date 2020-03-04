@@ -110,6 +110,16 @@
 
 
 /* Coach posts cards */
+.coach-posts, .performance-logs {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.coach-posts > h1 {
+    font-weight: bold;
+}
 .coach_posts_card {
     background: white;
     border: 1px solid black;
@@ -183,4 +193,36 @@
 .cpcc_lower > p {
     margin-left: 30px;
     font-size: 20px;
+}
+
+
+/* Perfromance accordion/cards */
+.performance-accordion-component {
+    width: 70%;
+}
+
+.performance-accordion {
+    background: white;
+    border: 1px solid #707070;
+    margin: 40px 0;
+    border-radius: 10px;
+
+}
+.performance-accordion-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: black;
+    color: white;
+    height: 90px;
+    font-size: 25px;
+    font-weight: bold;
+    border: none;
+    width: 100%;
+    /* border-radius: 10px; */
+
+}
+.performance-accordion-header:focus, .performance-accordion-header:active {
+    outline: none;
+    background: #C13540;
 }
