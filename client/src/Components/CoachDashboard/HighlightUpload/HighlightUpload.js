@@ -4,17 +4,17 @@ import {FaPlus} from 'react-icons/fa'
 import {storage} from '../../../firebaseConfig'
 import {ProgressBar} from 'react-bootstrap';
 import {toast} from 'react-toastify';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
+import {uploadHighlight} from '../../../Redux/actions/coach_to_athlete_actions'
 import 'react-toastify/dist/ReactToastify.css'
-import axios from 'axios'
-
-
 import ReactPlayer from 'react-player'
-
 import AthleteSelect from '../AthleteSelect/AthleteSelect'
+
 
 function HighlightUpload(props){
     const coach_user = useSelector(state => state.coach_user.userData)
+    const dispatch = useDispatch()
+
     const [selectedAthletes, setSelectedAthletes ] = useState([])
 
     // video upload states
@@ -44,16 +44,17 @@ function HighlightUpload(props){
 
 
     // For uploading the video 
+    let fileCloudName;
     const handleUploadChange = (event) => {
         const file = event.target.files[0]
-        console.log(file)
+        
         if(file){
             const filetype = file['type'];
             const validVideoFile = ['video/mp4']
 
             if(validVideoFile.includes(filetype)){
-                const uploadVideo = storage.ref(`highlights/videos/highlight-${file.lastModified}`).put(file)
-
+                fileCloudName = `${Math.random()}-${file.size}-${file.name}`
+                const uploadVideo = storage.ref(`highlights/videos/${fileCloudName}`).put(file)
                 uploadVideo.on(
                     'state_changed', 
 
@@ -66,7 +67,7 @@ function HighlightUpload(props){
                     error => setError(error),
 
                     () => {
-                        storage.ref('highlights/videos').child(file.name).getDownloadURL()
+                        storage.ref('highlights/videos').child(fileCloudName).getDownloadURL()
                         .then(url => setUrl(url))
                 })
             } else {
@@ -78,7 +79,7 @@ function HighlightUpload(props){
 
 
     const handleSubmit = () => {
-        const {lastname} = coach_user
+        const {lastname, _id} = coach_user
         if(progress < 100){
             toast.error('Wait until the video is fully uploaded')
         } else if(selectedAthletes.length == 0){
@@ -86,27 +87,29 @@ function HighlightUpload(props){
         }
         
         selectedAthletes.map(val => {
-            console.log(val)
+            let dataToSubmit = {
+                athlete_id: val,
+                video_link : url,
+                coach_writer : lastname,
+                coach_id : _id,
+            }
+
+            dispatch(uploadHighlight(dataToSubmit)).then(res => console.log(res))
         })
     }
 
-    console.log(url)
-    const getThumbnail = () => {
-        axios.post('/api/coach_to_athlete/get-thumbnail', {video: url})
-        .then(res => console.log(res.data))
-    }
-
-    if(url){
-        getThumbnail()
-    }
 
     return (
         <div className='highlight-upload'>
-           {url ?  <ReactPlayer url={url} controls={true}   /> : null } 
              <div className='upload-video'>
+                {url ?  
+                <div className='video-container'>
+                    <ReactPlayer className='react-player' url={url} controls={true} height='100%' width='100%' /> 
+                </div> : 
                 <div className='upload-video-square' onClick={() => squareAsInput()} >
                     <FaPlus size={90} color={'#707070'}/>
-                </div>
+                </div> 
+                }
                 {<ProgressBar now={progress} label={`${progress}%`} className='upload-progress-bar'/>}
                 <label className='custom-file-upload'>
                     <input type='file' onChange={handleUploadChange} name='highlightupload' />

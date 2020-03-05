@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {CREATE_COACH_POST, CREATE_PERFORMANCE_LOG} from './types'
+import {CREATE_COACH_POST, CREATE_PERFORMANCE_LOG, UPLOAD_HIGHLIGHT} from './types'
 
 
 var newDate = new Date()
@@ -51,6 +51,30 @@ export function createPerformanceLog(dataToSubmit){
     
     return {
         type: CREATE_PERFORMANCE_LOG,
+        payload: request
+    }
+}
+
+
+export function uploadHighlight(dataToSubmit) {
+    
+    const {athlete_id, coach_id, coach_writer, video_link} = dataToSubmit
+    let newData = {
+        "highlights" : {
+            coach_id,
+            coach_writer,
+            video_link,
+            "date_of_post" : theDate
+        }
+    }
+
+    let request = axios.put(`/api/coach_to_athlete/upload-highlight/${athlete_id}`, newData)
+    .then(res => res.data)
+    .catch(err => err)
+
+    
+    return {
+        type: UPLOAD_HIGHLIGHT,
         payload: request
     }
 }
