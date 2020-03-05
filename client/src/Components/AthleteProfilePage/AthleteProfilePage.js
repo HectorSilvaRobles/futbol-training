@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import {getAllAthletes} from '../../Redux/actions/athlete_actions'
 import {Accordion, Card} from 'react-bootstrap'
+import {FaStar} from 'react-icons/fa'
+
 
 import './athleteprofilepage.css'
 
@@ -79,13 +81,64 @@ export class AthleteProfilePage extends Component {
             <div className='performance-accordion-component'>
                 <Accordion defaultActiveKey={0}>
                     {athlete.performance_logs.map((val, index) => {
+                        console.log(val.focus_rating)
                             return (
                                 <div className='performance-accordion' key={index}>
                                     <Accordion.Toggle eventKey={index} className='performance-accordion-header'>
                                         <h1>{val.date_of_post}</h1>
+                                        <h2>By Coach {val.coach_writer}</h2>
                                     </Accordion.Toggle>
                                     <Accordion.Collapse eventKey={index}>
-                                        <h1>Content</h1>
+                                        <div className='performance-card-area'>
+                                            <div className='performance-card'>
+                                                <h1>Energy</h1>
+                                                <div>
+                                                    {[...Array(5)].map((value, index) => {
+                                                        return (
+                                                            <FaStar
+                                                                size={50}
+                                                                key={index}
+                                                                color={val.energy_rating >= index ? '#C13540' : 'black'}
+                                                                className='rating-star-read' 
+                                                            />
+
+                                                        )
+                                                    })}
+                                                </div>
+                                            </div>
+                                            <div className='performance-card'>
+                                                <h1>Focus</h1>
+                                                <div>
+                                                    {[...Array(5)].map((value, index) => {
+                                                        return (
+                                                            <FaStar
+                                                                size={50}
+                                                                key={index}
+                                                                color={val.focus_rating >= index ? '#C13540' : 'black'}
+                                                                className='rating-star-read' 
+                                                            />
+
+                                                        )
+                                                    })}
+                                                </div>
+                                            </div>
+                                            <div className='performance-card'>
+                                                <h1>Leadership</h1>
+                                                <div>
+                                                    {[...Array(5)].map((value, index) => {
+                                                        return (
+                                                            <FaStar
+                                                                size={50}
+                                                                key={index}
+                                                                color={val.leadership_rating >= index ? '#C13540' : 'black'}
+                                                                className='rating-star-read' 
+                                                            />
+
+                                                        )
+                                                    })}
+                                                </div>
+                                            </div>
+                                        </div>
                                     </Accordion.Collapse>
                                 </div>
                             )
@@ -121,7 +174,6 @@ export class AthleteProfilePage extends Component {
                     {this.state.coach_posts ? this.coachPosts() : null}
                     {this.state.performance_logs ? this.performanceLogs() : null}
                     {this.state.highlights ? <div>Highlights</div> : null}
-
                 </div>
             </div>
         )
