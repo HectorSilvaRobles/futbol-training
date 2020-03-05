@@ -69,47 +69,25 @@ router.put('/performance-log/:athlete_id', (req, res) => {
 })
 
 
-router.post('/get-thumbnail', (req, res) => {
 
-    // genThumbnail(req.body.video, 'thumbnails/pi.png', '500x500')
-    // .then(() => res.status(200).json({
-    //     success: true,
-    //     path: 'thumbnails/pi.png'
-    // }))
-    // .catch(err => console.log(err))
+router.put('/upload-highlight/:athlete_id', (req, res) => {
+    const param = req.params.athlete_id
 
+    Athletes.findByIdAndUpdate(param, {$push : req.body}, (err, updatedAthlete) => {
+        if(err){
+            return res.status(400).json({
+                success: false,
+                error: err,
+                message: 'could not save video highlight for athlete'
+            })
+        }
 
-})
-
-router.put('/upload-highlight/:athleted_id', (req, res) => {
-
-    
-
-    // ffmpeg.ffprobe(req.body.video, function(err, videoInfo){
-    //     const {duration} = videoInfo.format;
-    
-    //     if(duration){
-    //         const frameintervalInSeconds = Math.floor(duration / 1)
-
-    //         return ffmpeg()
-    //         .input(req.body.video)
-    //         .outputOptions([`-vf fps=1/${frameintervalInSeconds}`])
-    //         .output('thumb%04d.jpg')
-    //         .on('end', function(){
-    //             res.status(200).json({
-    //                 success: true,
-    //             })
-    //          })
-    //          .on('error', function(){
-    //              res.status(400).json({
-    //                  success: false,
-    //              })
-    //          })
-    //         .run()
-
-    //     }
-       
-    // }) 
+        return res.status(200).json({
+            success: true,
+            message: 'Successfully created performance log for athlete'
+        })
+    })
+ 
 })
 
 module.exports = router

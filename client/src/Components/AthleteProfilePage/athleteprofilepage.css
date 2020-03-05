@@ -117,7 +117,7 @@
     align-items: center;
     justify-content: center;
 }
-.coach-posts > h1 {
+.coach-posts > h1, .performance-accordion-component> h1 {
     font-weight: bold;
 }
 .coach_posts_card {
@@ -125,7 +125,7 @@
     border: 1px solid black;
     width: 75%;
     height: 20vh;
-    margin: 50px 0;
+    margin: 40px 0;
     border-radius: 10px;
     display: flex;
 }

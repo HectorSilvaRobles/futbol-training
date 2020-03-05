@@ -15,6 +15,7 @@ export const UPDATE_ATHLETE = "UPDATE_ATHLETE";
 // Coach to Athlete types
 export const CREATE_COACH_POST = "CREATE_COACH_POST";
 export const CREATE_PERFORMANCE_LOG = "CREATE_PERFORMANCE_LOG"
+export const UPLOAD_HIGHLIGHT = "UPLOAD_HIGHLIGHT"
 
 
 // Pending request status

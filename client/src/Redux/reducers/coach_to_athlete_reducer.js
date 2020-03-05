@@ -1,4 +1,4 @@
-import {CREATE_COACH_POST, CREATE_PERFORMANCE_LOG} from '../actions/types'
+import {CREATE_COACH_POST, CREATE_PERFORMANCE_LOG, UPLOAD_HIGHLIGHT} from '../actions/types'
 
 export default function(state = {}, action){
     switch(action.type){
@@ -6,6 +6,8 @@ export default function(state = {}, action){
             return {...state, coach_post: action.payload}
         case CREATE_PERFORMANCE_LOG:
             return {...state, performance_log: action.payload}
+        case UPLOAD_HIGHLIGHT :
+            return {...state, highlight: action.payload}
         default: 
             return state;
     }

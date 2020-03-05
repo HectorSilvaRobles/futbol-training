@@ -79,9 +79,9 @@ export class AthleteProfilePage extends Component {
         const {athlete} = this.state
         return (
             <div className='performance-accordion-component'>
+                <h1>{athlete.firstname}'s Performance</h1>
                 <Accordion defaultActiveKey={0}>
                     {athlete.performance_logs.map((val, index) => {
-                        console.log(val.focus_rating)
                             return (
                                 <div className='performance-accordion' key={index}>
                                     <Accordion.Toggle eventKey={index} className='performance-accordion-header'>

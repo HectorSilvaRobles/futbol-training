@@ -25,6 +25,9 @@ const highlightSchema = mongoose.Schema({
     coach_writer: {
         type: String
     },
+    coach_id : {
+        type: String
+    }, 
     video_link : {
         type: String
     },
