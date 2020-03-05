@@ -206,23 +206,59 @@
     border: 1px solid #707070;
     margin: 40px 0;
     border-radius: 10px;
-
 }
 .performance-accordion-header {
     display: flex;
     justify-content: center;
     align-items: center;
     background: black;
+    flex-direction: column;
     color: white;
-    height: 90px;
+    height: 100px;
     font-size: 25px;
     font-weight: bold;
     border: none;
     width: 100%;
     /* border-radius: 10px; */
-
+}
+.performance-accordion-header > h1 {
+    font-size: 30px;
+    font-weight: bold;
+}
+.performance-accordion-header > h2 {
+    font-size: 20px;
 }
 .performance-accordion-header:focus, .performance-accordion-header:active {
     outline: none;
     background: #C13540;
+}
+
+.performance-card-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 20px 0;
+}
+.performance-card {
+    background: white;
+    height: 15vh;
+    width: 80%;
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #D9D5D5;
+    box-shadow: 1px 2px 5px grey;
+
+}
+.performance-card > h1 {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.rating-star-read {
+    margin: 0 20px;
 }
