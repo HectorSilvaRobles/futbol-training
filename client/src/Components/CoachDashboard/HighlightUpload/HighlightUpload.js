@@ -22,6 +22,7 @@ function HighlightUpload(props){
     const [url, setUrl] = useState(null)
     const [thumbnail, setTumbnail] = useState(null)
     const [progress, setProgress]= useState(0)
+    const [uploadSuccess, setUploadSuccess] = useState(false)
    
 
     // make the square component act as a input with file type
@@ -80,28 +81,51 @@ function HighlightUpload(props){
 
     const handleSubmit = () => {
         const {lastname, _id} = coach_user
-        if(progress < 100){
-            toast.error('Wait until the video is fully uploaded')
+        if(progress < 100 || !url){
+            toast.error('Video must be fully uploaded')
         } else if(selectedAthletes.length == 0){
             toast.error('Please select an athlete')
-        }
-        
-        selectedAthletes.map(val => {
-            let dataToSubmit = {
-                athlete_id: val,
-                video_link : url,
-                coach_writer : lastname,
-                coach_id : _id,
-            }
+        } else {
+            selectedAthletes.map(val => {
+                let dataToSubmit = {
+                    athlete_id: val,
+                    video_link : url,
+                    coach_writer : lastname,
+                    coach_id : _id,
+                }
 
-            dispatch(uploadHighlight(dataToSubmit)).then(res => console.log(res))
-        })
+                dispatch(uploadHighlight(dataToSubmit)).then(res => {
+                    if(res.payload.success){
+                        setUploadSuccess(true)
+                        toast.success('Successfully uploaded highlight video to athlete\'s page' )
+                    }
+                })
+            })
+        }
     }
 
+
+    const handleReset = () => {
+        var selectedAthletes = document.getElementsByTagName('input');
+        
+        for(var i = 0; i<selectedAthletes.length; i++){
+            selectedAthletes[i].checked = false
+        }
+
+        setTimeout(() => {
+            setUrl(null)
+            setProgress(0)
+            setUploadSuccess(false)
+            setSelectedAthletes([])
+        }, 500)
+
+    }
 
     return (
         <div className='highlight-upload'>
              <div className='upload-video'>
+             {uploadSuccess ? handleReset() : null}
+
                 {url ?  
                 <div className='video-container'>
                     <ReactPlayer className='react-player' url={url} controls={true} height='100%' width='100%' /> 
