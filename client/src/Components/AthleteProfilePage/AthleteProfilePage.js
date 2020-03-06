@@ -4,6 +4,8 @@ import {getAllAthletes} from '../../Redux/actions/athlete_actions'
 import {Accordion} from 'react-bootstrap'
 import {FaStar} from 'react-icons/fa'
 import ReactPlayer from 'react-player'
+import Modal from 'react-responsive-modal';
+
 
 import './athleteprofilepage.css'
 
@@ -15,7 +17,9 @@ export class AthleteProfilePage extends Component {
             athlete: null,
             coach_posts: true,
             performance_logs: false,
-            highlights: false
+            highlights: false,
+            highlightModal: false,
+            highlightVideo: []
         }
     }
 
@@ -153,7 +157,6 @@ export class AthleteProfilePage extends Component {
 
     highlightsRender = () => {
         const {athlete} = this.state
-        console.log(athlete.highlights)
         return (
             <div className="highlight-area">
                 <h1>{athlete.firstname}'s Highlights</h1>
@@ -162,7 +165,7 @@ export class AthleteProfilePage extends Component {
                     {athlete.highlights.map((val, index) => {
                         return (
                             <div className='highlight-container' key={index} >
-                                <ReactPlayer className='react-player' url={val.video_link} controls={true} height='100%' width='100%' />
+                                <video height='100%' className='react-player' width='100%' onClick={() => this.setState({highlightModal: true, highlightVideo: val})}><source src={val.video_link} type='video/mp4' /></video>
                             </div>
                         )
                     })}
@@ -175,10 +178,41 @@ export class AthleteProfilePage extends Component {
     }
 
 
+
+
+    // Open highlight modal 
+    handleModal = () => {
+        const {highlightVideo} = this.state
+        console.log(this.state.highlightVideo)
+        return (
+            <Modal 
+                open={this.state.highlightModal} 
+                onClose={() => this.setState({highlightModal: false})}
+                styles={{
+                    modal: {
+                        maxWidth: 'unset',
+                        width: '70%',
+                        padding: 'unset'
+                    },
+                    closeButton: {
+                        background: 'white'
+                    }
+                }}
+                center
+                >
+                <div className='highlight-modal'>
+                    <ReactPlayer className='highlight-player' url={highlightVideo.video_link} controls={true} width='100%' height='calc(100vh - 200px)' /> 
+                </div>
+            </Modal>
+        )
+    }
+
+
     handleDisplayAthlete =() => {
         const {athlete} = this.state
         return (
             <div className='athlete-profile'>
+            {this.state.highlightModal ? this.handleModal() : null}
                 <div className='profile-header'>
                     <div className='profile-header-image'>
                         <img src={athlete.athlete_pic} alt='athlete profile pic' />
@@ -205,6 +239,8 @@ export class AthleteProfilePage extends Component {
     }
 
     render() {
+        console.log(this.state.highlightModal)
+
         const {athlete} = this.state
         return (
             <div className='athlete-profile-main'>
