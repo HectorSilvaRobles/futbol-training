@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import {getAllAthletes} from '../../Redux/actions/athlete_actions'
-import {Accordion, Card} from 'react-bootstrap'
+import {Accordion} from 'react-bootstrap'
 import {FaStar} from 'react-icons/fa'
-
+import ReactPlayer from 'react-player'
 
 import './athleteprofilepage.css'
 
@@ -75,6 +75,7 @@ export class AthleteProfilePage extends Component {
     }
 
 
+    // Render all the performance logs
     performanceLogs =() => {
         const {athlete} = this.state
         return (
@@ -150,6 +151,30 @@ export class AthleteProfilePage extends Component {
     }
 
 
+    highlightsRender = () => {
+        const {athlete} = this.state
+        console.log(athlete.highlights)
+        return (
+            <div className="highlight-area">
+                <h1>{athlete.firstname}'s Highlights</h1>
+                {athlete.highlights ?
+                <div className='highlights-go-here'>
+                    {athlete.highlights.map((val, index) => {
+                        return (
+                            <div className='highlight-container' key={index} >
+                                <ReactPlayer className='react-player' url={val.video_link} controls={true} height='100%' width='100%' />
+                            </div>
+                        )
+                    })}
+                 </div>
+                : 
+                <div>This athlete has no highlights</div>
+                }
+            </div>
+        )
+    }
+
+
     handleDisplayAthlete =() => {
         const {athlete} = this.state
         return (
@@ -173,7 +198,7 @@ export class AthleteProfilePage extends Component {
                 <div className='profile-content-area'>
                     {this.state.coach_posts ? this.coachPosts() : null}
                     {this.state.performance_logs ? this.performanceLogs() : null}
-                    {this.state.highlights ? <div>Highlights</div> : null}
+                    {this.state.highlights ? this.highlightsRender() : null}
                 </div>
             </div>
         )

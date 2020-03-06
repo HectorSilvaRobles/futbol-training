@@ -262,3 +262,29 @@
 .rating-star-read {
     margin: 0 20px;
 }
+
+
+
+/* Highlights Styling */
+.highlight-area {
+    /* background: red; */
+    width: 90%;
+}
+
+.highlights-go-here {
+    /* background: green; */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px;
+}
+
+.highlight-container {
+    width: 30%;
+    height: 300px;
+    background: blue;
+    margin: 10px;
+    position: relative;
+
+}
