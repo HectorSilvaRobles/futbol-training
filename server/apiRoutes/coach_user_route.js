@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const {coachUser} = require('../models/coachSchema');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 const {auth} = require('../middleware/auth');
 
@@ -106,6 +108,66 @@ router.get('/logout', auth, (req, res) => {
                 })
             }
         )
+})
+
+
+
+// Update coach user's information in database
+router.put('/update-coach/:coach_id', (req, res) => {
+    var param = req.params.coach_id
+    
+
+    // If coach user is updating password run this so we can properly hash the new password
+    if(req.body.password){ 
+        bcrypt.genSalt(saltRounds, (err, salt) => {
+            if(err){
+                return res.status(400).json({
+                    success: false,
+                    message: 'Could not generate salt for password',
+                    error: err
+                })
+            }
+
+            bcrypt.hash(req.body.password, salt, function(err, hash){
+                if(err){
+                    return res.status(400).json({
+                        success: false,
+                        message: 'Could not hash your password',
+                        error: err
+                    })
+                }
+                req.body.password = hash
+                coachUser.findByIdAndUpdate(param, req.body, (err, updated_coach) => {
+                    if(err){
+                        return res.status(400).json({
+                            success: false,
+                            message: 'Could not update your information',
+                            error: err
+                        })
+                    }
+                    return res.status(200).json({
+                        success: true,
+                        message: 'Successfully updated your password'
+                    })
+                })
+            })
+        })
+    } else {
+        // Does not inlcude a password change
+        coachUser.findByIdAndUpdate(param, req.body, (err, updated_coach) => {
+            if(err){
+                return res.status(400).json({
+                    success: false,
+                    message: 'Could not update your information',
+                    error: err
+                })
+            }
+            return res.status(200).json({
+                success: true,
+                message: 'Successfully updated your information'
+            })
+        })
+    } 
 })
 
 
