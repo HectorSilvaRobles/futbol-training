@@ -39,6 +39,14 @@ function AccordionComp(props){
                         <div className='accordion-card-body'>{props.manageAthleteContent}</div>
                     </Accordion.Collapse>
                 </Card> : null}
+                <Card className='accordion-card'>
+                    <Accordion.Toggle eventKey="4" className='accordion-card-header'>
+                        {props.editCoachUser}
+                    </Accordion.Toggle>
+                    <Accordion.Collapse eventKey="4">
+                        <div className='accordion-card-body'>{props.editCoachUserContent}</div>
+                    </Accordion.Collapse>
+                </Card>
                 
             </Accordion>
         

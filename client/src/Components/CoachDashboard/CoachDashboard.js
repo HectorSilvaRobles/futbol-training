@@ -3,6 +3,7 @@ import ManageAthletes from './ManageAthletes/ManageAthletes'
 import CoachPosts from './CoachPosts/CoachPosts'
 import PerformanceLogs from './PerformanceLogs/PerformanceLogs'
 import HighlightUpload from './HighlightUpload/HighlightUpload'
+import EditCoachUser from './EditCoachUser/EditCoachUser'
 import {useSelector} from 'react-redux'
 
 import AccordionComp from '../Accordion/Accordion'
@@ -36,6 +37,9 @@ function CoachDashboard (props){
                 adminShow={show}
                 manageAthleteTitle='Manage Athletes'
                 manageAthleteContent={<ManageAthletes />}
+
+                editCoachUser='Edit Profile'
+                editCoachUserContent={<EditCoachUser />}
             
             />
            
