@@ -89,7 +89,33 @@ class EditCoachUser extends Component {
                                             </div>            
                                         </div>
                                         <div className='ep-account-lower'>
-
+                                            <div className='ep-acc-low-title'>
+                                                <h1>Change Password</h1>
+                                            </div>
+                                            <div className='ep-acc-low-body'>
+                                                <div className='field-input-div-2'>
+                                                        <h1>New Password</h1>
+                                                        <Field
+                                                            id='new-password'
+                                                            type='text'
+                                                            value={values.password}
+                                                            onChange={handleChange}
+                                                            placeholder='Enter new password'
+                                                            className='field-input-2'
+                                                        />
+                                                </div> 
+                                                <div className='field-input-div-2'>
+                                                        <h1>Confirm Password</h1>
+                                                        <Field
+                                                            id='new-password'
+                                                            type='text'
+                                                            value={values.confirmPassword}
+                                                            onChange={handleChange}
+                                                            placeholder='Confirm new password'
+                                                            className='field-input-2'
+                                                        />
+                                                </div> 
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

@@ -29,22 +29,26 @@
 }
 
 .ep-account-upper {
-    height: 60%;
+    height: 55%;
     width: 90%;
     display : flex;
     align-items: center;
     flex-direction: column;
     justify-content: center;
+
     
 }
 
 .ep-account-lower {
-    background: blue;
-    height: 40%;
+    height: 45%;
     width: 90%;
+    display : flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
 }
 
-.ep-acc-upp-title {
+.ep-acc-upp-title, .ep-acc-low-title {
     height: 15%;
     width: 100%;
     display: flex;
@@ -52,8 +56,8 @@
     align-items: center;
     /* background: green; */
 }
-.ep-acc-upp-title > h1 {
-    font-size: 30px;
+.ep-acc-upp-title > h1, .ep-acc-low-title > h1 {
+    font-size: 25px;
     font-weight: bold;
     color: #707070;
     text-transform: uppercase;
@@ -68,23 +72,48 @@
     justify-content: space-evenly;
 }
 
-.field-input-div {
+.field-input-div, .field-input-div-2 {
     height: 20%;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    
 }
-.field-input-div > h1 {
-    font-size: 25px;
+
+.field-input-div-2 {
+    height: 45%;
+    align-items: flex-start;
+    flex-direction: column;
+    /* background: blue; */
+}
+
+
+.field-input-div > h1, .field-input-div-2 > h1 {
+    font-size: 20px;
     color: #707070;
     margin: 0;
 }
 
-.field-input {
+.field-input, .field-input-2 {
     height: 40px;
     width: 65%;
     padding-left: 10px; 
     border: solid 1px #707070;
+}
+.field-input-2 {
+    width: 100%;
+}
+
+.ep-acc-low-title {
+    height: 30%;
+    /* background: green; */
+}
+.ep-acc-low-body {
+    /* background: red; */
+    height: 70%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
 }
