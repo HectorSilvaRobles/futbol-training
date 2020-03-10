@@ -1,0 +1,90 @@
+.edit-profile-component {
+    display: flex;
+    align-items: center;;
+    justify-content: center;
+}
+
+.edit-profile {
+    height: 60vh;
+    width: 85%;
+    margin: 60px 0;
+    display: flex;
+
+}
+
+.ep-photo-update {
+    background: green;
+    height: 100%;
+    width: 40%;
+}
+
+.ep-account-info-update {
+    /* background: orange; */
+    height: 100%;
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.ep-account-upper {
+    height: 60%;
+    width: 90%;
+    display : flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    
+}
+
+.ep-account-lower {
+    background: blue;
+    height: 40%;
+    width: 90%;
+}
+
+.ep-acc-upp-title {
+    height: 15%;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    /* background: green; */
+}
+.ep-acc-upp-title > h1 {
+    font-size: 30px;
+    font-weight: bold;
+    color: #707070;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.ep-acc-upp-body {
+    height: 80%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.field-input-div {
+    height: 20%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+}
+.field-input-div > h1 {
+    font-size: 25px;
+    color: #707070;
+    margin: 0;
+}
+
+.field-input {
+    height: 40px;
+    width: 65%;
+    padding-left: 10px; 
+    border: solid 1px #707070;
+}
