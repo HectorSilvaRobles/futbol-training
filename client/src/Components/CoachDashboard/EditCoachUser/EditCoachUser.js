@@ -16,10 +16,6 @@ class EditCoachUser extends Component {
     }
 
     render(){
-        if(this.props.coach_user.userData){
-            const {profile_pic} = this.props.coach_user.userData
-        }
-
         return (
             <Formik
                 initialValues={{
@@ -44,16 +40,25 @@ class EditCoachUser extends Component {
             >
                 {props => {
                     const {values, touched, errors, isSubmitting, handleChange, handleBlur, handleSubmit} = props
+                    let coach_picture;
+                    if(this.props.coach_user.userData){
+                        let {profile_pic} = this.props.coach_user.userData
+                        coach_picture = profile_pic
+                    }
+            
                     return (
                         <Form onSubmit={handleSubmit}>
                             <div className='edit-profile-component'>
                                 <div className='edit-profile'>
                                     <div className='ep-photo-update'>
-                                        <div className='ep-ph-up-title'>
-                                            <h1>Profile Picture</h1>
-                                        </div>
                                         <div className='ep-ph-up-body'>
-
+                                            <div className='ep-profile-picture'>
+                                                <img src={coach_picture} />
+                                            </div>
+                                            <label className='custom-file-upload-2'>
+                                                <input type='file' onChange={() => console.log('hi')} name='highlightupload' />
+                                                Change Picture
+                                            </label>
                                         </div>
                                             
                                     </div>
