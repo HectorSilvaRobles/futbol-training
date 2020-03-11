@@ -2,6 +2,9 @@ import React, {Component} from 'react';
 import './editcoachuser.css'
 import {Formik, Form, Field} from 'formik'
 import * as Yup from 'yup'
+import {storage} from '../../../firebaseConfig';
+import {ProgressBar} from 'react-bootstrap';
+import {connect} from 'react-redux'
 
 class EditCoachUser extends Component {
     constructor(props){
@@ -13,8 +16,11 @@ class EditCoachUser extends Component {
     }
 
     render(){
-        return (
+        if(this.props.coach_user.userData){
+            const {profile_pic} = this.props.coach_user.userData
+        }
 
+        return (
             <Formik
                 initialValues={{
                     firstname: '',
@@ -29,22 +35,26 @@ class EditCoachUser extends Component {
                     lastname: Yup.string(),
                     email: Yup.string().email('Email is invalid, please enter a valid email'),
                     password: Yup.string().min(6, 'Password must be atleast 6 characters'),
-                    confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match').required('Please confirm your new password')
+                    confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match')
                 })}
 
                 onSubmit={(values, {setSubmitting}) => {
                     console.log(values)
                 }}
-                >
+            >
                 {props => {
-                    const {values, touched, errorr, isSubmitting, handleChange, handleBlur, hanldeSubmit} = props
-
+                    const {values, touched, errors, isSubmitting, handleChange, handleBlur, handleSubmit} = props
                     return (
-                        <Form>
+                        <Form onSubmit={handleSubmit}>
                             <div className='edit-profile-component'>
                                 <div className='edit-profile'>
                                     <div className='ep-photo-update'>
-                                        
+                                        <div className='ep-ph-up-title'>
+                                            <h1>Profile Picture</h1>
+                                        </div>
+                                        <div className='ep-ph-up-body'>
+
+                                        </div>
                                             
                                     </div>
                                     <div className='ep-account-info-update'>
@@ -89,10 +99,38 @@ class EditCoachUser extends Component {
                                             </div>            
                                         </div>
                                         <div className='ep-account-lower'>
-
+                                            <div className='ep-acc-low-title'>
+                                                <h1>Change Password</h1>
+                                            </div>
+                                            <div className='ep-acc-low-body'>
+                                                <div className='field-input-div-2'>
+                                                        <h1>New Password</h1>
+                                                        <Field
+                                                            id='password'
+                                                            type='password'
+                                                            value={values.password}
+                                                            onChange={handleChange}
+                                                            placeholder='Enter new password'
+                                                            className='field-input-2'
+                                                        />
+                                                        {/* {errors.password ? <div>{errors.password}</div> : null} */}
+                                                </div> 
+                                                <div className='field-input-div-2'>
+                                                        <h1>Confirm Password</h1>
+                                                        <Field
+                                                            id='confirmPassword'
+                                                            type='password'
+                                                            value={values.confirmPassword}
+                                                            onChange={handleChange}
+                                                            placeholder='Confirm new password'
+                                                            className='field-input-2'
+                                                        />
+                                                </div> 
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                                <button type='submit' disabled={isSubmitting} className='create-post-button'>Update Profile</button>
                             </div>  
                         </Form>                   
                     )
@@ -103,4 +141,9 @@ class EditCoachUser extends Component {
     }
 }
 
-export default EditCoachUser
+const mapStateToProps = (reduxState) => {
+    return reduxState
+}
+
+
+export default connect(mapStateToProps)(EditCoachUser)

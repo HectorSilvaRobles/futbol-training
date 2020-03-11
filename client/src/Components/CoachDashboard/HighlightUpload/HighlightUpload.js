@@ -20,7 +20,6 @@ function HighlightUpload(props){
     // video upload states
     const [error, setError] = useState(false)
     const [url, setUrl] = useState(null)
-    const [thumbnail, setTumbnail] = useState(null)
     const [progress, setProgress]= useState(0)
     const [uploadSuccess, setUploadSuccess] = useState(false)
    
