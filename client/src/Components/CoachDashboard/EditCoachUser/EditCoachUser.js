@@ -11,11 +11,47 @@ class EditCoachUser extends Component {
         super(props)
 
         this.state = {
+            profilePicUploadProgress: 0,
+            profilePicUrl: null,
+            uploadError: null
+        }
+    }
+    
 
+    // When user wants to change their profile picture run this
+    handleUploadChange = (event) => {
+        const file = event.target.files[0]
+        if(file){
+            const filetype = file['type']
+            const validFileType = ['image/jpeg', 'image/png']
+
+            if(validFileType.includes(filetype)){
+                let fileCloudName =  `${Math.random()}-${file.size}-${file.name}`
+                const uploadProfilePic = storage.ref(`profile_pic/${fileCloudName}`).put(file)
+                uploadProfilePic.on(
+                    'state_changed',
+
+                    snapshot => {
+                        let uploadProgress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100)
+                        this.setState({profilePicUploadProgress: uploadProgress})
+                    },
+
+                    error => alert('error uploading profile picture'),
+
+                    () => {
+                        storage.ref('profile_pic').child(fileCloudName).getDownloadURL()
+                        .then(url => this.setState({profilePicUrl: url}))
+                    }
+                )
+            } else {
+                this.setState({uploadError: 'Could not upload profile picture.'})
+            }
         }
     }
 
+
     render(){
+        console.log(this.state)
         return (
             <Formik
                 initialValues={{
@@ -55,8 +91,9 @@ class EditCoachUser extends Component {
                                             <div className='ep-profile-picture'>
                                                 <img src={coach_picture} />
                                             </div>
+                                            {<ProgressBar now={this.state.profilePicUploadProgress} label={`${this.state.profilePicUploadProgress}`} className='upload-progress-bar-2' />}
                                             <label className='custom-file-upload-2'>
-                                                <input type='file' onChange={() => console.log('hi')} name='highlightupload' />
+                                                <input type='file' onChange={(event) => this.handleUploadChange(event) }/>
                                                 Change Picture
                                             </label>
                                         </div>
