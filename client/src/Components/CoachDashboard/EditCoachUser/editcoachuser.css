@@ -143,7 +143,6 @@
 .ep-profile-picture {
     height: 220px;
     width: 220px;
-    margin-bottom: 20px;
 }
 .ep-profile-picture > img {
     width: 100%;
@@ -164,4 +163,9 @@
     color: #707070;
     cursor: pointer;
     border-radius: 5px;
+}
+
+.upload-progress-bar-2 {
+    margin: 15px 0;
+    width: 60%;
 }
