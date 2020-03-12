@@ -11,7 +11,6 @@ export default function(state = {}, action){
         case LOGOUT_USER:
             return {...state}
         case UPDATE_USER:
-            console.log('hit redux')
             return {...state, newData: action.payload}
         default:
             return state;
