@@ -163,7 +163,8 @@ router.put('/update-coach/:coach_id', (req, res) => {
             }
             return res.status(200).json({
                 success: true,
-                message: 'Successfully updated your information'
+                message: 'Successfully updated your information',
+                'updatedInfo' : updated_coach
             })
         })
     } 

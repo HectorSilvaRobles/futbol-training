@@ -45,7 +45,6 @@ export function logoutUser(){
 
 export function updateUser(dataToSubmit){
     // Create a new object with valid values
-    console.log(dataToSubmit)
     let newObject = {}
     for(let [key, value] of Object.entries(dataToSubmit)){
         if(value !== '' && key !== 'coach_id'){
@@ -53,10 +52,8 @@ export function updateUser(dataToSubmit){
         }
     }
 
-    console.log(newObject)
-
     let request = axios.put(`/api/coach-users/update-coach/${dataToSubmit.coach_id}`, newObject)
-    .then(res => res.data)
+    .then(res => {return res.data})
     .catch(err => err)
 
     return {

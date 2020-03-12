@@ -14,7 +14,8 @@ class EditCoachUser extends Component {
         this.state = {
             profilePicUploadProgress: 0,
             profilePicUrl: null,
-            uploadError: null
+            uploadError: null,
+            updateSuccess: false
         }
     }
     
@@ -74,6 +75,7 @@ class EditCoachUser extends Component {
                     if(this.props.coach_user.userData){
                         const {_id} = this.props.coach_user.userData
             
+                        
                         let dataToSubmit = {
                             firstname: values.firstname,
                             lastname: values.lastname,
@@ -84,10 +86,15 @@ class EditCoachUser extends Component {
                         }
 
                         setTimeout(() => {
-                            updateUser(dataToSubmit)
-                            
-                            setSubmitting(false)
-                        }, 500)
+                            this.props.updateUser(dataToSubmit).then(res => {
+                                if(res.payload.success){
+                                    console.log(res)
+                                    this.setState({updateSuccess: true})
+                                }
+                            })
+                            setSubmitting(false) 
+                        }, 500 )
+                        
                     }
                 }}
             >
