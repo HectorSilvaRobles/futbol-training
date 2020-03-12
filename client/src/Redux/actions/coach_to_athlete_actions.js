@@ -48,6 +48,7 @@ export function createPerformanceLog(dataToSubmit){
     let request = axios.put(`/api/coach_to_athlete/performance-log/${athlete_id}`, newData)
     .then(res => res.data)
     .catch(err => err)
+
     
     return {
         type: CREATE_PERFORMANCE_LOG,

@@ -116,7 +116,6 @@ router.get('/logout', auth, (req, res) => {
 router.put('/update-coach/:coach_id', (req, res) => {
     var param = req.params.coach_id
     
-
     // If coach user is updating password run this so we can properly hash the new password
     if(req.body.password){ 
         bcrypt.genSalt(saltRounds, (err, salt) => {

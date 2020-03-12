@@ -3,6 +3,7 @@ import './editcoachuser.css'
 import {Formik, Form, Field} from 'formik'
 import * as Yup from 'yup'
 import {storage} from '../../../firebaseConfig';
+import {updateUser} from '../../../Redux/actions/coach_user_actions'
 import {ProgressBar} from 'react-bootstrap';
 import {connect} from 'react-redux'
 
@@ -51,7 +52,6 @@ class EditCoachUser extends Component {
 
 
     render(){
-        console.log(this.state)
         return (
             <Formik
                 initialValues={{
@@ -71,7 +71,24 @@ class EditCoachUser extends Component {
                 })}
 
                 onSubmit={(values, {setSubmitting}) => {
-                    console.log(values)
+                    if(this.props.coach_user.userData){
+                        const {_id} = this.props.coach_user.userData
+            
+                        let dataToSubmit = {
+                            firstname: values.firstname,
+                            lastname: values.lastname,
+                            email: values.email,
+                            password: values.password,
+                            coach_id: _id,
+                            profile_pic: this.state.profilePicUrl ? this.state.profilePicUrl : ''
+                        }
+
+                        setTimeout(() => {
+                            updateUser(dataToSubmit)
+                            
+                            setSubmitting(false)
+                        }, 500)
+                    }
                 }}
             >
                 {props => {
@@ -137,6 +154,8 @@ class EditCoachUser extends Component {
                                                         placeholder='Update Email'
                                                         className='field-input'
                                                     />
+                                                        {errors.email ? <div>{errors.email}</div> : null}
+
                                                 </div>  
                                             </div>            
                                         </div>
@@ -155,7 +174,7 @@ class EditCoachUser extends Component {
                                                             placeholder='Enter new password'
                                                             className='field-input-2'
                                                         />
-                                                        {/* {errors.password ? <div>{errors.password}</div> : null} */}
+                                                        {errors.password ? <div>{errors.password}</div> : null}
                                                 </div> 
                                                 <div className='field-input-div-2'>
                                                         <h1>Confirm Password</h1>
@@ -167,6 +186,8 @@ class EditCoachUser extends Component {
                                                             placeholder='Confirm new password'
                                                             className='field-input-2'
                                                         />
+                                                        {errors.confirmPassword ? <div>{errors.confirmPassword}</div> : null}
+
                                                 </div> 
                                             </div>
                                         </div>
@@ -187,5 +208,10 @@ const mapStateToProps = (reduxState) => {
     return reduxState
 }
 
+const reduxActions = {
+    updateUser
+}
 
-export default connect(mapStateToProps)(EditCoachUser)
+const myConnect = connect(mapStateToProps, reduxActions)
+
+export default myConnect(EditCoachUser)

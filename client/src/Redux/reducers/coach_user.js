@@ -1,4 +1,4 @@
-import {LOGIN_USER, LOGOUT_USER, REGISTER_USER, AUTH_USER} from '../actions/types'
+import {LOGIN_USER, LOGOUT_USER, REGISTER_USER, AUTH_USER, UPDATE_USER} from '../actions/types'
 
 export default function(state = {}, action){
     switch(action.type){
@@ -10,6 +10,9 @@ export default function(state = {}, action){
             return {...state, userData: action.payload}
         case LOGOUT_USER:
             return {...state}
+        case UPDATE_USER:
+            console.log('hit redux')
+            return {...state, newData: action.payload}
         default:
             return state;
     }
