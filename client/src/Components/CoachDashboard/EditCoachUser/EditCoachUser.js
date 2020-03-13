@@ -6,6 +6,9 @@ import {storage} from '../../../firebaseConfig';
 import {updateUser} from '../../../Redux/actions/coach_user_actions'
 import {ProgressBar} from 'react-bootstrap';
 import {connect} from 'react-redux'
+import {toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
+
 
 class EditCoachUser extends Component {
     constructor(props){
@@ -15,7 +18,8 @@ class EditCoachUser extends Component {
             profilePicUploadProgress: 0,
             profilePicUrl: null,
             uploadError: null,
-            updateSuccess: false
+            updateSuccess: false,
+            newProfilePic: null
         }
     }
     
@@ -51,6 +55,16 @@ class EditCoachUser extends Component {
         }
     }
 
+     // When user has successfully updated their account run handleReset
+    handleResetForm = () => {
+        setTimeout(() => {
+            this.setState({
+                profilePicUploadProgress: 0,
+                profilePicUrl: null,
+                updateSuccess: false
+            })
+        }, 500)
+    }
 
     render(){
         return (
@@ -71,10 +85,9 @@ class EditCoachUser extends Component {
                     confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match')
                 })}
 
-                onSubmit={(values, {setSubmitting}) => {
+                onSubmit={(values, {setSubmitting, resetForm}) => {
                     if(this.props.coach_user.userData){
                         const {_id} = this.props.coach_user.userData
-            
                         
                         let dataToSubmit = {
                             firstname: values.firstname,
@@ -88,8 +101,20 @@ class EditCoachUser extends Component {
                         setTimeout(() => {
                             this.props.updateUser(dataToSubmit).then(res => {
                                 if(res.payload.success){
-                                    console.log(res)
+
+                                    // Delete the previous profile picture from firebase storage if user has updated/added their profile picture
+                                    if(res.payload.updatedInfo.profile_pic){
+                                        this.setState({newProfilePic: res.payload.updatedInfo.profile_pic})
+                                        const removeOldPicture = storage.refFromURL(res.payload.old_info.profile_pic)
+                                        removeOldPicture.delete().then(() => {
+                                            return;
+                                        }).catch((err) => {
+                                            return;
+                                        })
+                                    }
                                     this.setState({updateSuccess: true})
+                                    toast.success('Successfully updated your information')
+                                    resetForm()
                                 }
                             })
                             setSubmitting(false) 
@@ -99,21 +124,23 @@ class EditCoachUser extends Component {
                 }}
             >
                 {props => {
-                    const {values, touched, errors, isSubmitting, handleChange, handleBlur, handleSubmit} = props
+                    const {values, errors, isSubmitting, handleChange, handleSubmit} = props
                     let coach_picture;
                     if(this.props.coach_user.userData){
                         let {profile_pic} = this.props.coach_user.userData
                         coach_picture = profile_pic
                     }
-            
+                    
                     return (
                         <Form onSubmit={handleSubmit}>
+                        {this.state.updateSuccess ? this.handleResetForm() : null}
+
                             <div className='edit-profile-component'>
                                 <div className='edit-profile'>
                                     <div className='ep-photo-update'>
                                         <div className='ep-ph-up-body'>
                                             <div className='ep-profile-picture'>
-                                                <img src={coach_picture} />
+                                                <img src={this.state.newProfilePic ? this.state.newProfilePic : this.state.profilePicUrl ? this.state.profilePicUrl : coach_picture} />
                                             </div>
                                             {<ProgressBar now={this.state.profilePicUploadProgress} label={`${this.state.profilePicUploadProgress}`} className='upload-progress-bar-2' />}
                                             <label className='custom-file-upload-2'>
