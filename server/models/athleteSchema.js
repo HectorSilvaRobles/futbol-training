@@ -4,6 +4,9 @@ const coachPostsSchema = mongoose.Schema({
     coach_writer: {
         type : String,
     },
+    coach_id: {
+        type: String
+    },
     coach_profile_pic : {
         type: String
     },

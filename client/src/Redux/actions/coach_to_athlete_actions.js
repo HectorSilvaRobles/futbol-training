@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {CREATE_COACH_POST, CREATE_PERFORMANCE_LOG, UPLOAD_HIGHLIGHT} from './types'
+import {CREATE_COACH_POST, CREATE_PERFORMANCE_LOG, UPLOAD_HIGHLIGHT, DELETE_COACH_POST} from './types'
 
 
 var newDate = new Date()
@@ -11,13 +11,14 @@ const theDate = `${theMonth} ${theDay}, ${theYear}`
 
 
 export function createCoachPost(dataToSubmit){
-    const {athlete_id, coach_writer, coach_profile_pic, coach_message, type_of_post} = dataToSubmit
+    const {athlete_id, coach_writer, coach_profile_pic, coach_message, type_of_post, coach_id} = dataToSubmit
     let newData = {
         "coach_posts" : {
             coach_writer,
             coach_profile_pic,
             coach_message,
             type_of_post,
+            coach_id,
             "date_of_post" : theDate
         }
     }
@@ -76,6 +77,24 @@ export function uploadHighlight(dataToSubmit) {
     
     return {
         type: UPLOAD_HIGHLIGHT,
+        payload: request
+    }
+}
+
+
+
+export function deleteCoachPost(dataToSubmit){
+    console.log(dataToSubmit)
+    const newData = {
+        "post_id" : dataToSubmit.post_id
+    }
+
+    let request = axios.delete(`/api/coach_to_athlete/remove-coach-post/${dataToSubmit.athlete_id}`, newData)
+    .then(res => res.data)
+    .catch(err => err)
+
+    return {
+        type: DELETE_COACH_POST,
         payload: request
     }
 }

@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import {getAllAthletes} from '../../Redux/actions/athlete_actions'
+import {deleteCoachPost} from '../../Redux/actions/coach_to_athlete_actions'
 import {Accordion} from 'react-bootstrap'
-import {FaStar} from 'react-icons/fa'
+import {FaStar, FaTrashAlt} from 'react-icons/fa'
 import ReactPlayer from 'react-player'
 import Modal from 'react-responsive-modal';
-
-
 import './athleteprofilepage.css'
+
 
 export class AthleteProfilePage extends Component {
     constructor(props) {
@@ -37,6 +37,22 @@ export class AthleteProfilePage extends Component {
         })
     }
 
+    
+
+    deleteFunctionality = (typeOfDelete, id) => {
+        if(typeOfDelete == 'coach_post'){
+            const dataToSubmit = {
+                post_id: id,
+                athlete_id: this.state.athlete._id
+            }
+            this.props.deleteCoachPost(dataToSubmit)
+            .then(res => {
+                console.log(res)
+                
+            })
+        }
+    }
+
 
     // Render each of the athlete's Coach posts
     coachPosts = () => {
@@ -47,12 +63,13 @@ export class AthleteProfilePage extends Component {
             // coach_posts = coach_posts.reverse()
             if(coach_posts.length > 0){
                 coach_posts_cards = coach_posts.map((val) => {
-                    const {coach_writer, coach_profile_pic, coach_message, type_of_post, date_of_post} = val
+                    
+                    const {coach_writer, coach_profile_pic, coach_message, type_of_post, date_of_post, coach_id} = val
                     return (
                         <div className='coach_posts_card' key={val._id}>
                             <div className='coach_posts_card_header'>
                                 <img src={coach_profile_pic} />
-                                <h1>Coach {coach_writer}</h1>
+                                <h1>Coach {coach_writer}</h1> 
                             </div>
                             <div className='coach_posts_card_content'>
                                 <div className='cpcc_upper'>
@@ -63,6 +80,13 @@ export class AthleteProfilePage extends Component {
                                     <p>{coach_message}</p>
                                 </div>
                             </div>
+                            {coach_id == this.props.coach_user.userData._id ? 
+                                <div className='delete-option'>
+                                <FaTrashAlt color='#C13540' onClick={() => this.deleteFunctionality('coach_post', val._id)} size={20} className='delete-icon' />
+                                </div> 
+                            : null 
+                            }
+
                         </div>
                     )
                 })
@@ -225,7 +249,7 @@ export class AthleteProfilePage extends Component {
                 </div>
                 <div className='profile-options'>
                     <button className={this.state.coach_posts ? 'profile-options-button-active':'profile-options-button'} onClick={() => this.setState({coach_posts: true, performance_logs: false, highlights: false})}>Newsfeed</button>
-                    <button className={this.state.performance_logs ? 'profile-options-button-active':'profile-options-button'} onClick={() => this.setState({performance_logs: true, coach_posts: false, highlights: false})}>Perfromance</button>
+                    <button className={this.state.performance_logs ? 'profile-options-button-active':'profile-options-button'} onClick={() => this.setState({performance_logs: true, coach_posts: false, highlights: false})}>Performance</button>
                     <button className={this.state.highlights ? 'profile-options-button-active':'profile-options-button'} onClick={() => this.setState({highlights: true, performance_logs: false, coach_posts: false})}>Highlights</button>
                 </div>
 
@@ -239,8 +263,6 @@ export class AthleteProfilePage extends Component {
     }
 
     render() {
-        console.log(this.state.highlightModal)
-
         const {athlete} = this.state
         return (
             <div className='athlete-profile-main'>
@@ -254,4 +276,4 @@ const mapStateToProps = (reduxState) => {
     return reduxState
 }
 
-export default connect(mapStateToProps, {getAllAthletes})(AthleteProfilePage)
+export default connect(mapStateToProps, {getAllAthletes, deleteCoachPost})(AthleteProfilePage)

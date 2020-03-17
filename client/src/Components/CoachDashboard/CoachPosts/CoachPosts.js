@@ -17,11 +17,11 @@ export class CoachPosts extends Component {
     }
 
     handleSubmit = () => {
-        const {lastname, profile_pic, accountRole} = this.props.coach_user.userData
+        const {lastname, profile_pic, accountRole, _id} = this.props.coach_user.userData
         let textArea = document.getElementById('coach-post-text').value
         let coachType = document.getElementById('coach-post-type').value
 
-
+        
         // Error handling if textarea/coachType/selectedAthletes are empty
         if(!textArea || !coachType || this.state.selectedAthletes.length < 1){
             this.setState({errorPost: true})
@@ -31,6 +31,7 @@ export class CoachPosts extends Component {
             this.state.selectedAthletes.map(val => {
                 const dataToSubmit = {
                     "coach_writer" : lastname,
+                    "coach_id" : _id,
                     "coach_profile_pic": profile_pic,
                     "type_of_post" : coachType,
                     "coach_message" : textArea,
