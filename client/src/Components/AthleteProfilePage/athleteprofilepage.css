@@ -187,7 +187,9 @@
     height: 45%;
     width: 100%;
     display: flex;
+    text-align: start;
     margin-top: 10px;
+    /* justify-content: flex-start; */
 
 }
 .cpcc_lower > p {
@@ -305,4 +307,15 @@
    height: 70vh;
    width: 100%;
    position: relative;
+}
+
+
+.delete-option {
+    width: 7%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.delete-icon {
+    cursor: pointer;
 }
