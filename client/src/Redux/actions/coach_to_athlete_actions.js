@@ -84,12 +84,13 @@ export function uploadHighlight(dataToSubmit) {
 
 
 export function deleteCoachPost(dataToSubmit){
-    console.log(dataToSubmit)
     const newData = {
-        "post_id" : dataToSubmit.post_id
+        post_id : dataToSubmit.post_id
     }
 
-    let request = axios.delete(`/api/coach_to_athlete/remove-coach-post/${dataToSubmit.athlete_id}`, newData)
+    console.log(newData)
+    
+    let request = axios.put(`/api/coach_to_athlete/remove-coach-post/${dataToSubmit.athlete_id}`, newData)
     .then(res => res.data)
     .catch(err => err)
 

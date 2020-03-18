@@ -16,6 +16,7 @@ export class AthleteProfilePage extends Component {
         this.state = {
             athlete: null,
             coach_posts: true,
+            all_coach_posts: [],
             performance_logs: false,
             highlights: false,
             highlightModal: false,
@@ -31,7 +32,7 @@ export class AthleteProfilePage extends Component {
             let all_athletes = res.payload.all_Athletes
             all_athletes.map(val => {
                 if(val._id == athlete_id){
-                    this.setState({athlete: val})
+                    this.setState({athlete: val, all_coach_posts: val.coach_posts})
                 }
             })
         })
@@ -47,23 +48,35 @@ export class AthleteProfilePage extends Component {
             }
             this.props.deleteCoachPost(dataToSubmit)
             .then(res => {
-                console.log(res)
-                
+                if(res.payload.success && this.state.athlete){
+                    const {coach_posts} = this.state.athlete
+                    const updated_coach_posts = coach_posts.filter(post => post._id !== id)
+                    this.setState({all_coach_posts: updated_coach_posts })
+                }
             })
+        }
+    }
+
+
+    reorderPosts = () => {
+        const {all_coach_posts} = this.state
+        if(all_coach_posts){
+            console.log('hi')
+            console.log(all_coach_posts.map(val => {
+                const {date_of_post} = val
+                console.log(date_of_post)
+            }))
         }
     }
 
 
     // Render each of the athlete's Coach posts
     coachPosts = () => {
-        const {athlete} = this.state
-        if(athlete){
-            let {coach_posts} = athlete
+        const {all_coach_posts} = this.state
+        if(all_coach_posts){
             let coach_posts_cards
-            // coach_posts = coach_posts.reverse()
-            if(coach_posts.length > 0){
-                coach_posts_cards = coach_posts.map((val) => {
-                    
+            if(all_coach_posts.length > 0){
+                coach_posts_cards = all_coach_posts.map((val) => {
                     const {coach_writer, coach_profile_pic, coach_message, type_of_post, date_of_post, coach_id} = val
                     return (
                         <div className='coach_posts_card' key={val._id}>
@@ -95,7 +108,8 @@ export class AthleteProfilePage extends Component {
             }
             return (
                 <div className='coach-posts'>
-                    <h1>{athlete.firstname}'s Newsfeed</h1>
+                    <h1>{this.state.athlete.firstname}'s Newsfeed</h1>
+                    <button onClick={() => this.reorderPosts() }>Button</button>
                     {coach_posts_cards}
                 </div>
             )
@@ -264,6 +278,7 @@ export class AthleteProfilePage extends Component {
 
     render() {
         const {athlete} = this.state
+        console.log(this.state)
         return (
             <div className='athlete-profile-main'>
                 {athlete ? this.handleDisplayAthlete() : null}
