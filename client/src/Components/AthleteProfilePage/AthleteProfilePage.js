@@ -58,14 +58,59 @@ export class AthleteProfilePage extends Component {
     }
 
 
+
+    ////////// NEEDS WORK TO BE DONE STILL ////////////
     reorderPosts = () => {
         const {all_coach_posts} = this.state
         if(all_coach_posts){
-            console.log('hi')
-            console.log(all_coach_posts.map(val => {
-                const {date_of_post} = val
-                console.log(date_of_post)
-            }))
+            const monthsToNum = {
+                'Jan' : 1,
+                'Feb' : 2,
+                'Mar' : 3,
+                'Apr' : 4,
+                'May' : 5,
+                'June' : 6,
+                'July' : 7,
+                'Aug' : 8,
+                'Sep' : 9,
+                'Oct' : 10,
+                'Nov' : 11,
+                'Dec' : 12
+            }
+
+            let newdate_coach_post = all_coach_posts.map((val, index) => {
+                let {date_of_post} = val
+                date_of_post = date_of_post.split(' ')
+                for(var key in monthsToNum){
+                    if(key == date_of_post[0]){
+                        date_of_post[0] = monthsToNum[key]
+                    }
+                }
+                date_of_post[1] = parseInt(date_of_post[1])
+                date_of_post[2] = parseInt(date_of_post[2])
+                
+                let reorderedDates = []
+                reorderedDates.push(date_of_post[1])
+                reorderedDates.push(date_of_post[0])
+                reorderedDates.push(date_of_post[2])
+                reorderedDates = reorderedDates.sort()
+
+                console.log(reorderedDates)
+
+                // reorderedDates = reorderedDates.join('')
+
+                // val.date_of_post = reorderedDates
+                // return val
+            })
+            return newdate_coach_post
+
+            // newdate_coach_post = newdate_coach_post.sort(function(a,b){
+            //     return a.date_of_post < b.date_of_post ? 1 : a.date_of_post > b.date_of_post ? -1 : 0
+            // })
+
+            
+            // this.setState({all_coach_posts: newdate_coach_post})
+            
         }
     }
 
@@ -278,7 +323,7 @@ export class AthleteProfilePage extends Component {
 
     render() {
         const {athlete} = this.state
-        console.log(this.state)
+        
         return (
             <div className='athlete-profile-main'>
                 {athlete ? this.handleDisplayAthlete() : null}

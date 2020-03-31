@@ -6,12 +6,10 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 
-
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(cors());
-
 
 // Connecting Mongoose Database
 mongoose.connect(`${process.env.MONGODB_URI}`, {
@@ -22,6 +20,7 @@ mongoose.connect(`${process.env.MONGODB_URI}`, {
 })
 .then(() => console.log('MongooDB connected'))
 .catch(err => console.log('there was an error', err))
+
 
 
 // Coach User endpoints
