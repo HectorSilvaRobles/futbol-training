@@ -27,7 +27,9 @@ router.put('/coach-post/:athlete_id', (req, res, next) => {
 
 
 // Removing coach post
-router.delete('/remove-coach-post/:athlete_id', (req, res) => {
+router.put('/remove-coach-post/:athlete_id', (req, res) => {
+    console.log('this is req.body', req.body)
+    console.log('this is param', req.params)
     const param = req.params.athlete_id
     const post = req.body.post_id
 

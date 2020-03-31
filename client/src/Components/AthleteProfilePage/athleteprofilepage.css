@@ -123,22 +123,25 @@
 .coach_posts_card {
     background: white;
     border: 1px solid black;
-    width: 75%;
-    height: 20vh;
+    width: 80%;
+    height: 100%;
     margin: 40px 0;
     border-radius: 10px;
     display: flex;
+    overflow: hidden;
 }
 .coach_posts_card_header {
     background: black;
-    height: 100%;
-    width: 30%;
+    height: auto;
+    width: 25%;
     border-radius: 10px 0 0 10px;
     border: none;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    min-height: 20vh;
+    min-width: 10vw;
 }
 .coach_posts_card_header > img {
     height: 110px;
@@ -163,7 +166,8 @@
 .cpcc_upper {
     /* background: blue; */
     width: 100%;
-    height: 30%;
+    height: auto;
+    min-height: 8vh;
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
@@ -183,13 +187,14 @@
 }
 
 .cpcc_lower {
-    /* background: green; */
-    height: 45%;
+    height: auto;
     width: 100%;
     display: flex;
     text-align: start;
+    flex-wrap: wrap;
     margin-top: 10px;
     /* justify-content: flex-start; */
+    overflow: hidden;
 
 }
 .cpcc_lower > p {
