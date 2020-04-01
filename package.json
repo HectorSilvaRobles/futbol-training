@@ -4,8 +4,10 @@
   "description": "Futbol-training web application",
   "main": "server/index.js",
   "scripts": {
-    "server": "nodemon server/index.js",
+    "start": "nodemon server/index.js",
     "client": "npm run start --prefix client",
+    "install-client": "cd client && npm install",
+    "heroku-postbuild": "npm run install-client && npm run build",
     "build" : "npm run build --prefix client"
   },
   "author": "Hector Silva-Robles",
