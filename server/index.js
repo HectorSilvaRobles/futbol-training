@@ -38,7 +38,9 @@ app.use('/api/pending', require('./apiRoutes/pending_route'))
 
 const port = process.env.PORT || 4000
 
-app.use(express.static(path.join(__dirname, 'client/build')))
+if(process.env.NODE_ENV === 'production'){
+    app.use(express.static(path.join(__dirname, 'client/build')))
+}
 
 
 app.listen(port, () => console.log(`server running on port ${port}`))
