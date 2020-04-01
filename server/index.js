@@ -38,7 +38,7 @@ app.use('/api/pending', require('./apiRoutes/pending_route'))
 const port = 4000
 
 if(process.env.NODE_ENV === 'production'){
-    app.use(express.static(path.join(__dirname, 'client/build')))
+    app.use(express.static('client/build'))
 }
 
 
