@@ -7,7 +7,7 @@
     "start": "nodemon server/index.js",
     "client": "npm run start --prefix client",
     "install-client": "cd client && npm install",
-    "heroku-postbuild": "npm run install-client && npm run build",
+    "heroku-postbuild": "npm run install --prefix client && npm run build --prefix client",
     "build" : "npm run build --prefix client"
   },
   "author": "Hector Silva-Robles",
