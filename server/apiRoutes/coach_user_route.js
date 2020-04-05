@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const {coachUser} = require('../models/coachSchema');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const saltRounds = 10;
 
 const {auth} = require('../middleware/auth');
