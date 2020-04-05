@@ -4,7 +4,7 @@
   "description": "Futbol-training web application",
   "main": "server/index.js",
   "scripts": {
-    "start": "nodemon server/index.js",
+    "start": "node server/index.js",
     "client": "npm run start --prefix client",
     "install-client": "cd client && npm install",
     "heroku-postbuild": "npm run install --prefix client && npm run build --prefix client",
