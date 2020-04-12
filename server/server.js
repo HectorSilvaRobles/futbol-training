@@ -35,7 +35,7 @@ app.use('/api/coach_to_athlete', require('./apiRoutes/coach_to_athlete_route'))
 // get all pending requests
 app.use('/api/pending', require('./apiRoutes/pending_route'))
 
-const PORT = process.env.PORT || 4000
+const PORT = 4000
 
 if(process.env.NODE_ENV == 'production'){
     app.use(express.static(path.join("client/build")));
