@@ -4,7 +4,10 @@ import './athletepage.css'
 import { Redirect } from 'react-router-dom'
 
 function AthletesPage(props) {
-    const athletes = useSelector(state => state.athletes_reducer.athletes)
+    const athletes = useSelector(state => { 
+    console.log(state) 
+    return state.athletes_reducer.athletes})
+
     // Redirect to specific athlete profile page
     const [redirect, setRedirect] = useState(false)
     const [athlete, setAthlete] = useState('');
